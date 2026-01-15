@@ -45,6 +45,170 @@
 
 ---
 
+## Apple Design Guidelines (iOS 18 / visionOS)
+
+Приложение должно соответствовать современным принципам дизайна Apple.
+
+### Визуальный язык
+
+- **Стекломорфизм (Glassmorphism)**: полупрозрачные карточки с `backdrop-filter: blur(20px)`
+- **Большие радиусы скругления**: `border-radius: 20px` для карточек, `12px` для кнопок
+- **Мягкие многослойные тени**: `box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08)`
+- **Динамические переходы**: плавные морфинговые анимации между состояниями
+
+### Цветовая палитра Apple
+
+| Цвет | Light Mode | Dark Mode |
+|------|------------|-----------|
+| Blue (Primary) | `#007AFF` | `#0A84FF` |
+| Green (Success) | `#34C759` | `#30D158` |
+| Red (SOS/Danger) | `#FF3B30` | `#FF453A` |
+| Orange (Warning) | `#FF9500` | `#FF9F0A` |
+| Purple | `#AF52DE` | `#BF5AF2` |
+| Background | `#F2F2F7` | `#000000` |
+| Card | `#FFFFFF` | `#1C1C1E` |
+| Secondary Card | `#F2F2F7` | `#2C2C2E` |
+| Label | `#000000` | `#FFFFFF` |
+| Secondary Label | `#3C3C43` (60%) | `#EBEBF5` (60%) |
+| Separator | `#3C3C43` (30%) | `#545458` (65%) |
+
+### Типографика
+
+```css
+font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+```
+
+| Стиль | Размер | Вес | Letter-spacing |
+|-------|--------|-----|----------------|
+| Large Title | 34px | Bold (700) | -0.02em |
+| Title 1 | 28px | Bold (700) | -0.02em |
+| Title 2 | 22px | Bold (700) | -0.02em |
+| Headline | 17px | Semibold (600) | -0.01em |
+| Body | 17px | Regular (400) | 0 |
+| Callout | 16px | Regular (400) | 0 |
+| Subhead | 15px | Regular (400) | 0 |
+| Footnote | 13px | Regular (400) | 0 |
+| Caption | 12px | Regular (400) | 0 |
+
+### Компоненты
+
+#### Карточки (Cards)
+```css
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+}
+
+.dark .card {
+  background: rgba(28, 28, 30, 0.8);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+```
+
+#### Кнопки (Buttons)
+```css
+/* Filled (Primary) */
+.btn-filled {
+  background: var(--apple-blue);
+  color: white;
+  border-radius: 12px;
+  padding: 14px 20px;
+  font-weight: 600;
+  font-size: 17px;
+}
+
+/* Tinted (Secondary) */
+.btn-tinted {
+  background: rgba(0, 122, 255, 0.15);
+  color: var(--apple-blue);
+  border-radius: 12px;
+}
+
+/* Gray (Tertiary) */
+.btn-gray {
+  background: rgba(118, 118, 128, 0.12);
+  color: var(--label-color);
+  border-radius: 12px;
+}
+```
+
+#### Tab Bar
+- Высота: 49px (без safe area)
+- Иконки: 24px, stroke-width: 1.5
+- Активный: заливка цветом (filled icon)
+- Неактивный: контур (outline icon), `opacity: 0.6`
+- Фон: blur с полупрозрачностью
+
+### Анимации
+
+```css
+/* Пружинная анимация для переходов */
+transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+/* Press state для кнопок */
+.btn:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+/* Hover state (для десктопа) */
+.btn:hover {
+  filter: brightness(1.05);
+}
+```
+
+#### Haptic Feedback
+```javascript
+// Лёгкая вибрация на tap
+navigator.vibrate?.(10);
+
+// Средняя вибрация на важное действие
+navigator.vibrate?.([20, 50, 20]);
+```
+
+### Spacing System (8pt Grid)
+
+| Токен | Значение | Использование |
+|-------|----------|---------------|
+| `space-1` | 4px | Иконка-текст |
+| `space-2` | 8px | Внутри компонентов |
+| `space-3` | 12px | Между элементами |
+| `space-4` | 16px | Padding карточек |
+| `space-5` | 20px | Увеличенный padding |
+| `space-6` | 24px | Между секциями |
+| `space-8` | 32px | Большие отступы |
+
+### Иконки
+
+Использовать иконки в стиле SF Symbols:
+- Stroke width: 1.5-2px
+- Закруглённые концы линий
+- Консистентный визуальный вес
+
+**Рекомендуемые библиотеки:**
+- Heroicons (https://heroicons.com)
+- Lucide Icons (https://lucide.dev)
+
+### Safe Areas
+
+```css
+/* Учёт выреза и домашнего индикатора */
+padding-bottom: env(safe-area-inset-bottom);
+padding-top: env(safe-area-inset-top);
+```
+
+### Accessibility
+
+- Минимальный размер touch target: 44×44px
+- Контрастность текста: минимум 4.5:1
+- Поддержка `prefers-reduced-motion`
+- Семантическая разметка с ARIA
+
+---
+
 ## Структура приложения
 
 ```
@@ -576,4 +740,4 @@ self.addEventListener('fetch', (event) => {
 
 ---
 
-*Последнее обновление: январь 2026*
+*Последнее обновление: 15 января 2026*
