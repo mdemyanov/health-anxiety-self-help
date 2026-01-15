@@ -70,7 +70,7 @@ localStorage для данных
 │   │   └── Diary.jsx
 │   ├── App.jsx                   # Роутинг
 │   ├── main.jsx                  # Entry point
-│   └── index.css                 # Tailwind + Apple Design System
+│   └── index.css                 # Tailwind + Apple Liquid Glass
 ├── CLAUDE.md                     # Этот файл
 ├── health-anxiety-self-help-guide.md  # Контент и методички
 ├── index.html
@@ -107,7 +107,7 @@ localStorage для данных
 
 - **Формат**: Модульный React-проект (Vite)
 - **Фреймворк**: React 18 с функциональными компонентами и hooks
-- **Стилизация**: Tailwind CSS 4 + CSS переменные (Apple Design System)
+- **Стилизация**: Tailwind CSS 4 + CSS переменные (Apple Liquid Glass)
 - **Адаптивность**: Mobile-first, работает на телефоне
 - **Оффлайн**: PWA с Service Worker (vite-plugin-pwa)
 - **Хранение**: localStorage для дневника и настроек
@@ -123,16 +123,64 @@ localStorage для данных
 
 ---
 
-## Apple Design Guidelines (iOS 18 / visionOS)
+## Apple Liquid Glass Design (iOS 26 / WWDC 2025)
 
-Приложение соответствует современным принципам дизайна Apple.
+Приложение использует **Liquid Glass** — новый дизайн-язык Apple, анонсированный на WWDC 2025.
 
-### Визуальный язык
+### Что такое Liquid Glass
 
-- **Стекломорфизм (Glassmorphism)**: полупрозрачные карточки с `backdrop-filter: blur(20px)`
-- **Большие радиусы скругления**: `border-radius: 20px` для карточек, `12px` для кнопок
-- **Мягкие многослойные тени**: `box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08)`
-- **Динамические переходы**: плавные морфинговые анимации между состояниями
+Liquid Glass — это полупрозрачный материал, который отражает и преломляет окружающий контент, динамически трансформируясь для фокусировки на контенте. Дизайн создаёт эффект реального стекла с бликами и тенями.
+
+**Источники:**
+- [Apple Newsroom](https://www.apple.com/newsroom/2025/06/apple-introduces-a-delightful-and-elegant-new-software-design/)
+- [Wikipedia: Liquid Glass](https://en.wikipedia.org/wiki/Liquid_Glass)
+
+### Ключевые характеристики
+
+- **Усиленный glassmorphism**: `backdrop-filter: blur(40px)` — более выраженное размытие
+- **Высокая прозрачность**: `rgba(255, 255, 255, 0.25-0.45)` в светлой теме
+- **Тонкие границы**: `border: 0.5px solid rgba(255, 255, 255, 0.3-0.5)`
+- **Specular highlights**: градиентные блики, имитирующие преломление света
+- **Многослойные тени**: 3 уровня теней для глубины
+- **Spring-based анимации**: `cubic-bezier(0.4, 0, 0.2, 1)` — физически реалистичные переходы
+
+### CSS-переменные Liquid Glass
+
+```css
+/* Light Mode */
+--glass-bg: rgba(255, 255, 255, 0.45);
+--glass-bg-elevated: rgba(255, 255, 255, 0.6);
+--glass-bg-button: rgba(255, 255, 255, 0.35);
+--glass-border: rgba(255, 255, 255, 0.5);
+--glass-border-subtle: rgba(0, 0, 0, 0.06);
+--glass-blur: 40px;
+--glass-shadow:
+  0 2px 4px rgba(0, 0, 0, 0.02),
+  0 8px 16px rgba(0, 0, 0, 0.04),
+  0 16px 32px rgba(0, 0, 0, 0.06);
+--glass-highlight: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, transparent 60%);
+--glass-inner-highlight: inset 0 1px 1px rgba(255, 255, 255, 0.6);
+
+/* Dark Mode */
+--glass-bg: rgba(255, 255, 255, 0.08);
+--glass-bg-elevated: rgba(255, 255, 255, 0.12);
+--glass-border: rgba(255, 255, 255, 0.15);
+--glass-shadow: /* более тёмные тени */
+--glass-highlight: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+```
+
+### CSS-классы компонентов
+
+| Класс | Назначение |
+|-------|------------|
+| `.liquid-glass` | Базовый Liquid Glass материал |
+| `.liquid-glass-elevated` | Для карточек на цветном фоне |
+| `.card` | Алиас для `.liquid-glass` |
+| `.action-card` | Интерактивные карточки |
+| `.btn-glass` | Стеклянная кнопка |
+| `.btn-filled` | Заполненная кнопка с тенью |
+| `.btn-tinted` | Полупрозрачная цветная кнопка |
+| `.glass-tint-{color}` | Цветные оттенки: blue, green, red, orange, purple |
 
 ### Цветовая палитра Apple
 
@@ -144,11 +192,8 @@ localStorage для данных
 | Orange (Warning) | `#FF9500` | `#FF9F0A` |
 | Purple | `#AF52DE` | `#BF5AF2` |
 | Background | `#F2F2F7` | `#000000` |
-| Card | `#FFFFFF` | `#1C1C1E` |
-| Secondary Card | `#F2F2F7` | `#2C2C2E` |
 | Label | `#000000` | `#FFFFFF` |
-| Secondary Label | `#3C3C43` (60%) | `#EBEBF5` (60%) |
-| Separator | `#3C3C43` (30%) | `#545458` (65%) |
+| Secondary Label | `rgba(60, 60, 67, 0.6)` | `rgba(235, 235, 245, 0.6)` |
 
 ### Типографика
 
@@ -167,6 +212,23 @@ font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
 | Subhead | 15px | Regular (400) | 0 |
 | Footnote | 13px | Regular (400) | 0 |
 | Caption | 12px | Regular (400) | 0 |
+
+### Компоненты React
+
+```jsx
+// Card с Liquid Glass
+<Card className="p-6">Контент</Card>
+<Card elevated className="p-6">Elevated карточка</Card>
+
+// ActionCard с цветным оттенком
+<ActionCard to="/path" tint="blue">Синий оттенок</ActionCard>
+
+// Button варианты
+<Button variant="filled">Primary</Button>
+<Button variant="glass">Glass</Button>
+<Button variant="tinted">Tinted</Button>
+<Button variant="gray">Gray</Button>
+```
 
 ---
 

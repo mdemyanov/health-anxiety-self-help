@@ -2,6 +2,7 @@ export default function Card({
   children,
   className = '',
   onClick,
+  elevated = false,
   as: Component = 'div',
   ...props
 }) {
@@ -10,13 +11,17 @@ export default function Card({
     onClick(e);
   } : undefined;
 
+  const cardClass = elevated ? 'liquid-glass-elevated' : 'card';
+
   return (
     <Component
-      className={`card ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`${cardClass} ${onClick ? 'cursor-pointer' : ''} ${className}`}
       onClick={handleClick}
       {...props}
     >
-      {children}
+      <div className="relative z-10">
+        {children}
+      </div>
     </Component>
   );
 }

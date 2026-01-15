@@ -12,6 +12,7 @@ export default function Button({
     filled: 'btn-filled',
     tinted: 'btn-tinted',
     gray: 'btn-gray',
+    glass: 'btn-glass',
   }[variant] || 'btn-filled';
 
   const handleClick = (e) => {
@@ -27,7 +28,7 @@ export default function Button({
       disabled={disabled}
       {...props}
     >
-      {children}
+      <span className="relative z-10">{children}</span>
     </button>
   );
 }

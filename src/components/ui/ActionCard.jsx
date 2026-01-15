@@ -5,6 +5,7 @@ export default function ActionCard({
   to,
   onClick,
   className = '',
+  tint,
   ...props
 }) {
   const navigate = useNavigate();
@@ -18,13 +19,17 @@ export default function ActionCard({
     }
   };
 
+  const tintClass = tint ? `glass-tint-${tint}` : '';
+
   return (
     <button
-      className={`action-card w-full ${className}`}
+      className={`action-card w-full ${tintClass} ${className}`}
       onClick={handleClick}
       {...props}
     >
-      {children}
+      <div className="relative z-10">
+        {children}
+      </div>
     </button>
   );
 }
