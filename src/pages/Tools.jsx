@@ -3,7 +3,7 @@ import { Header } from '../components/layout';
 
 export default function Tools() {
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-tab-bar">
       <Header title="Инструменты" />
 
       <main className="px-4 space-y-6">

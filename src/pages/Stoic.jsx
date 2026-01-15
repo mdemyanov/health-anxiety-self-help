@@ -4,7 +4,7 @@ import { quotes } from '../data/quotes';
 
 export default function Stoic() {
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-tab-bar">
       <Header title="Стоические практики" />
 
       <main className="px-4 space-y-6">

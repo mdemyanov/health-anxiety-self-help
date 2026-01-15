@@ -289,73 +289,55 @@ body {
   color: var(--label-secondary);
 }
 
-/* Liquid Glass Tab bar */
-.tab-bar {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border-top: 0.5px solid var(--glass-border-subtle);
-  box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.05);
-  position: relative;
+/* Content bottom padding for floating TabBar */
+.pb-tab-bar {
+  padding-bottom: calc(88px + env(safe-area-inset-bottom));
 }
 
-.tab-bar::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.3) 0%,
-    transparent 50%
-  );
-  pointer-events: none;
-}
-
-.dark .tab-bar::before {
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.08) 0%,
-    transparent 50%
-  );
-}
-
-/* Liquid Glass SOS button */
-@keyframes pulse-sos {
-  0%, 100% {
-    box-shadow:
-      0 0 0 0 rgba(255, 59, 48, 0.4),
-      0 4px 16px rgba(255, 59, 48, 0.3);
-  }
-  50% {
-    box-shadow:
-      0 0 0 12px rgba(255, 59, 48, 0),
-      0 4px 16px rgba(255, 59, 48, 0.3);
-  }
-}
-
-.sos-btn {
+/* SOS Card */
+.sos-card {
   background: linear-gradient(
     135deg,
-    rgba(255, 59, 48, 0.95) 0%,
-    rgba(255, 69, 58, 0.9) 100%
+    var(--apple-red) 0%,
+    #FF453A 100%
   );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 0.5px solid rgba(255, 255, 255, 0.3);
-  animation: pulse-sos 2s infinite;
+  box-shadow:
+    0 4px 16px rgba(255, 59, 48, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
 }
 
-.sos-btn::before {
+.sos-card::before {
   content: '';
   position: absolute;
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.25) 0%,
     transparent 50%
   );
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Floating Tab Bar */
+.tab-bar-float {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 0.5px solid var(--glass-border);
+  border-radius: 28px;
+  box-shadow: var(--glass-shadow-elevated);
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-bar-float::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-highlight);
   pointer-events: none;
   border-radius: inherit;
 }
@@ -484,4 +466,109 @@ body {
   animation: liquid-glass-shimmer 3s infinite;
   pointer-events: none;
   border-radius: inherit;
+}
+
+/* ============================
+   Chat UI Styles
+   ============================ */
+
+.chat-container {
+  background: var(--background);
+}
+
+/* Chat header */
+.chat-header {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-highlight);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Chat input bar */
+.chat-input-bar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 0.5px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.chat-input-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--glass-highlight);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Safe area padding utilities */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Chat message bubbles */
+.chat-bubble-therapist {
+  border-radius: 22px 22px 22px 6px;
+}
+
+.chat-bubble-user {
+  border-radius: 22px 22px 6px 22px;
+}
+
+/* Chat slider input */
+.chat-slider input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--glass-border);
+}
+
+.chat-slider input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.chat-slider input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Label tertiary color */
+:root {
+  --label-tertiary: rgba(60, 60, 67, 0.3);
+}
+
+.dark {
+  --label-tertiary: rgba(235, 235, 245, 0.3);
 }

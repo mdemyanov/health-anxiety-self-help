@@ -1,16 +1,16 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
-import { TabBar, SosButton } from './components/layout';
+import { TabBar } from './components/layout';
 
 // Pages
 import Home from './pages/Home';
 import Tools from './pages/Tools';
 import Stoic from './pages/Stoic';
 import Diary from './pages/Diary';
-import { SosStart, SosFlow } from './pages/sos';
-import { StopPause, Grounding54321, AbcDiary, AbcDetail, Decatastrophize, Dichotomy } from './pages/tools/index';
+import ChatTool from './pages/chat/ChatTool';
+import { AbcDetail } from './pages/tools/index';
 import { BoxBreathing, Breathing478 } from './pages/breathing/index';
-import { MorningPractice, EveningReflection, ViewFromAbove, Quotes } from './pages/stoic/index';
+import { Quotes } from './pages/stoic/index';
 import { MoodTracker } from './pages/diary/index';
 
 function App() {
@@ -25,31 +25,31 @@ function App() {
             <Route path="/stoic" element={<Stoic />} />
             <Route path="/diary" element={<Diary />} />
 
-            {/* SOS */}
-            <Route path="/sos" element={<SosStart />} />
-            <Route path="/sos/flow" element={<SosFlow />} />
+            {/* Chat-based Tools */}
+            <Route path="/tools/stop-pause" element={<ChatTool flowId="stop-pause" />} />
+            <Route path="/tools/grounding" element={<ChatTool flowId="grounding" />} />
+            <Route path="/tools/abc" element={<ChatTool flowId="abc-diary" />} />
+            <Route path="/tools/decatastrophize" element={<ChatTool flowId="decatastrophize" />} />
+            <Route path="/tools/dichotomy" element={<ChatTool flowId="dichotomy" />} />
 
-            {/* Tools */}
+            {/* Non-chat tools (breathing stays as is) */}
             <Route path="/tools/breathing" element={<BoxBreathing />} />
             <Route path="/tools/breathing-478" element={<Breathing478 />} />
-            <Route path="/tools/stop-pause" element={<StopPause />} />
-            <Route path="/tools/grounding" element={<Grounding54321 />} />
-            <Route path="/tools/abc" element={<AbcDiary />} />
-            <Route path="/tools/decatastrophize" element={<Decatastrophize />} />
-            <Route path="/tools/dichotomy" element={<Dichotomy />} />
 
-            {/* Stoic */}
-            <Route path="/stoic/morning" element={<MorningPractice />} />
-            <Route path="/stoic/evening" element={<EveningReflection />} />
+            {/* Chat-based Stoic */}
+            <Route path="/stoic/morning" element={<ChatTool flowId="morning" />} />
+            <Route path="/stoic/evening" element={<ChatTool flowId="evening" />} />
+            <Route path="/stoic/view-from-above" element={<ChatTool flowId="view-from-above" />} />
             <Route path="/stoic/quotes" element={<Quotes />} />
-            <Route path="/stoic/view-from-above" element={<ViewFromAbove />} />
+
+            {/* SOS - only accessible from Home */}
+            <Route path="/sos" element={<ChatTool flowId="sos" />} />
 
             {/* Diary */}
             <Route path="/diary/:id" element={<AbcDetail />} />
             <Route path="/diary/mood" element={<MoodTracker />} />
           </Routes>
 
-          <SosButton />
           <TabBar />
         </div>
       </BrowserRouter>

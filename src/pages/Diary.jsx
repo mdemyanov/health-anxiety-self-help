@@ -16,7 +16,7 @@ export default function Diary() {
 
   if (entries.length === 0) {
     return (
-      <div className="min-h-screen pb-20">
+      <div className="min-h-screen pb-tab-bar">
         <Header title="Мой дневник" />
 
         <main className="px-4">
@@ -35,7 +35,7 @@ export default function Diary() {
   }
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-tab-bar">
       <Header title="Мой дневник" />
 
       <main className="px-4">

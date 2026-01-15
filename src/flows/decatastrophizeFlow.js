@@ -1,0 +1,168 @@
+export const decatastrophizeFlow = {
+  id: 'decatastrophize',
+  title: 'Декатастрофизация',
+
+  steps: [
+    {
+      id: 'intro',
+      messages: [
+        {
+          type: 'therapist-text',
+          content: 'Давай разберём твой страх по шагам.',
+          delay: 0,
+        },
+        {
+          type: 'therapist-text',
+          content: 'Эта техника поможет увидеть ситуацию более реалистично.',
+          delay: 800,
+        },
+      ],
+    },
+    {
+      id: 'fear',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'Чего ты боишься? Опиши свой страх или тревожную мысль.',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'Я боюсь, что...',
+          saveAs: 'fear',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'initial-probability',
+      messages: [
+        {
+          type: 'therapist-text',
+          content: 'Понял. Теперь оцени вероятность.',
+          delay: 500,
+        },
+        {
+          type: 'therapist-text',
+          content: 'Насколько вероятно, что твой страх реален?',
+          delay: 1000,
+        },
+        {
+          type: 'slider',
+          options: { min: 0, max: 100, unit: '%', initialValue: 50 },
+          delay: 1500,
+          awaitCompletion: true,
+          saveAs: 'probability',
+        },
+      ],
+    },
+    {
+      id: 'evidence-for',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'Какие факты ПОДТВЕРЖДАЮТ твой страх?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'Факты за...',
+          saveAs: 'evidence_for',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'evidence-against',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'А какие факты ОПРОВЕРГАЮТ твой страх?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'Факты против...',
+          saveAs: 'evidence_against',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'worst-case',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'Каков ХУДШИЙ сценарий? Что самое плохое может случиться?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'В худшем случае...',
+          saveAs: 'worst_case',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'best-case',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'А каков ЛУЧШИЙ сценарий?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'В лучшем случае...',
+          saveAs: 'best_case',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'realistic',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'Каков РЕАЛИСТИЧНЫЙ сценарий? Что, скорее всего, произойдёт?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'Скорее всего...',
+          saveAs: 'realistic',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'reassess',
+      messages: [
+        {
+          type: 'therapist-text',
+          content: 'Теперь, после анализа, переоцени вероятность.',
+          delay: 500,
+        },
+        {
+          type: 'slider',
+          options: { min: 0, max: 100, unit: '%', initialValue: 30 },
+          delay: 1000,
+          awaitCompletion: true,
+          saveAs: 'new_probability',
+        },
+      ],
+    },
+    {
+      id: 'result',
+      messages: [
+        {
+          type: 'therapist-text',
+          content: 'Посмотри на результат:',
+          delay: 500,
+        },
+        {
+          type: 'comparison',
+          options: {
+            before: { label: 'До анализа', valueKey: 'probability' },
+            after: { label: 'После анализа', valueKey: 'new_probability' },
+          },
+          delay: 1000,
+        },
+        {
+          type: 'therapist-text',
+          content: 'Видишь? Анализ помогает снизить тревогу и увидеть ситуацию более реалистично.',
+          delay: 2500,
+        },
+      ],
+    },
+  ],
+};
