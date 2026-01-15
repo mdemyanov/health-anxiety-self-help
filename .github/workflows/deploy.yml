@@ -15,11 +15,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configure AWS CLI for Yandex Cloud
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.YC_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.YC_SECRET_ACCESS_KEY }}
-          aws-region: ru-central1
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.YC_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          aws configure set default.region ru-central1
 
       - name: Sync files to Yandex Object Storage
         run: |
