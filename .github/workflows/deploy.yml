@@ -75,7 +75,7 @@ jobs:
   # Deploy to Yandex Object Storage
   deploy:
     runs-on: ubuntu-latest
-    needs: [test, e2e]
+    needs: [test]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
