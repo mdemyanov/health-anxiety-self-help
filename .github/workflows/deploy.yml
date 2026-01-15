@@ -1,0 +1,44 @@
+name: Deploy to Yandex Object Storage
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Configure AWS CLI for Yandex Cloud
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.YC_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          aws configure set default.region ru-central1
+
+      - name: Sync dist to Yandex Object Storage
+        run: |
+          aws s3 sync dist s3://${{ secrets.YC_BUCKET_NAME }} \
+            --endpoint-url https://storage.yandexcloud.net \
+            --delete \
+            --acl public-read
+
+      - name: Output deployment URL
+        run: |
+          echo "Deployed to: https://${{ secrets.YC_BUCKET_NAME }}.website.yandexcloud.net/"
