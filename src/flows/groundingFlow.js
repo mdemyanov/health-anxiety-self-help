@@ -32,11 +32,11 @@ export const groundingFlow = {
           delay: 1200,
         },
         {
-          type: 'multi-input',
+          type: 'repeated-input',
           options: {
             count: 5,
-            sense: 'вижу',
-            color: 'var(--apple-blue)',
+            placeholder: 'Я вижу...',
+            statusHintTemplate: 'Напиши еще {remaining}',
           },
           delay: 1800,
           awaitCompletion: true,
@@ -53,11 +53,11 @@ export const groundingFlow = {
           delay: 500,
         },
         {
-          type: 'multi-input',
+          type: 'repeated-input',
           options: {
             count: 4,
-            sense: 'трогаю',
-            color: 'var(--apple-green)',
+            placeholder: 'Я трогаю...',
+            statusHintTemplate: 'Напиши еще {remaining}',
           },
           delay: 1000,
           awaitCompletion: true,
@@ -74,11 +74,11 @@ export const groundingFlow = {
           delay: 500,
         },
         {
-          type: 'multi-input',
+          type: 'repeated-input',
           options: {
             count: 3,
-            sense: 'слышу',
-            color: 'var(--apple-purple)',
+            placeholder: 'Я слышу...',
+            statusHintTemplate: 'Напиши еще {remaining}',
           },
           delay: 1000,
           awaitCompletion: true,
@@ -95,11 +95,11 @@ export const groundingFlow = {
           delay: 500,
         },
         {
-          type: 'multi-input',
+          type: 'repeated-input',
           options: {
             count: 2,
-            sense: 'чувствую',
-            color: 'var(--apple-orange)',
+            placeholder: 'Я чувствую запах...',
+            statusHintTemplate: 'Напиши еще {remaining}',
           },
           delay: 1000,
           awaitCompletion: true,
@@ -116,11 +116,11 @@ export const groundingFlow = {
           delay: 500,
         },
         {
-          type: 'multi-input',
+          type: 'repeated-input',
           options: {
             count: 1,
-            sense: 'ощущаю',
-            color: 'var(--apple-red)',
+            placeholder: 'Я ощущаю вкус...',
+            statusHintTemplate: 'Напиши еще {remaining}',
           },
           delay: 1000,
           awaitCompletion: true,

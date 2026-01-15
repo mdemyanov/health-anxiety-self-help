@@ -1,11 +1,28 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 
+// Russian pluralization helper
+const pluralize = (count, one, few, many) => {
+  const mod10 = count % 10;
+  const mod100 = count % 100;
+  if (mod100 >= 11 && mod100 <= 14) return many;
+  if (mod10 === 1) return one;
+  if (mod10 >= 2 && mod10 <= 4) return few;
+  return many;
+};
+
+const formatStatusHint = (template, remaining) => {
+  if (!template || remaining <= 0) return null;
+  const word = pluralize(remaining, 'вещь', 'вещи', 'вещей');
+  return template.replace('{remaining}', `${remaining} ${word}`);
+};
+
 export function useChatFlow(flowConfig) {
   const [messages, setMessages] = useState([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [awaitingInput, setAwaitingInput] = useState(null);
   const [awaitingCompletion, setAwaitingCompletion] = useState(null);
+  const [repeatedInputState, setRepeatedInputState] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
   const [collectedData, setCollectedData] = useState({});
   const [isComplete, setIsComplete] = useState(false);
@@ -97,6 +114,21 @@ export function useChatFlow(flowConfig) {
           saveAs: msgConfig.saveAs,
           multiline: msgConfig.multiline,
         });
+      } else if (msgConfig.type === 'repeated-input') {
+        // Initialize repeated input mode
+        const { count, placeholder, statusHintTemplate } = msgConfig.options || {};
+        setRepeatedInputState({
+          count,
+          current: 0,
+          values: [],
+          saveAs: msgConfig.saveAs,
+          options: msgConfig.options,
+        });
+        setAwaitingInput({
+          placeholder: placeholder || 'Напиши ответ...',
+          statusHint: formatStatusHint(statusHintTemplate, count),
+        });
+        // Do NOT advance currentMessageIndex - wait for all inputs
       } else if (msgConfig.awaitCompletion) {
         setAwaitingCompletion({
           saveAs: msgConfig.saveAs,
@@ -119,7 +151,38 @@ export function useChatFlow(flowConfig) {
       content: value,
     });
 
-    // Save data
+    // Handle repeated input mode
+    if (repeatedInputState) {
+      const newValues = [...repeatedInputState.values, value];
+      const remaining = repeatedInputState.count - newValues.length;
+
+      if (remaining > 0) {
+        // More inputs needed
+        setRepeatedInputState({
+          ...repeatedInputState,
+          current: newValues.length,
+          values: newValues,
+        });
+        setAwaitingInput({
+          ...awaitingInput,
+          statusHint: formatStatusHint(repeatedInputState.options.statusHintTemplate, remaining),
+        });
+      } else {
+        // All inputs collected
+        if (repeatedInputState.saveAs) {
+          setCollectedData((prev) => ({
+            ...prev,
+            [repeatedInputState.saveAs]: newValues,
+          }));
+        }
+        setRepeatedInputState(null);
+        setAwaitingInput(null);
+        setCurrentMessageIndex((prev) => prev + 1);
+      }
+      return;
+    }
+
+    // Regular input: save data
     if (awaitingInput.saveAs) {
       setCollectedData((prev) => ({
         ...prev,
@@ -129,7 +192,7 @@ export function useChatFlow(flowConfig) {
 
     setAwaitingInput(null);
     setCurrentMessageIndex((prev) => prev + 1);
-  }, [awaitingInput, addMessage]);
+  }, [awaitingInput, repeatedInputState, addMessage]);
 
   // Handle interaction completion (timer, slider, etc.)
   const handleInteractionComplete = useCallback((value) => {
@@ -177,6 +240,7 @@ export function useChatFlow(flowConfig) {
     setCurrentMessageIndex(0);
     setAwaitingInput(null);
     setAwaitingCompletion(null);
+    setRepeatedInputState(null);
     setIsTyping(false);
     setCollectedData({});
     setIsComplete(false);

@@ -6,7 +6,8 @@ export default function ChatInput({
   placeholder = 'Напиши ответ...',
   disabled = false,
   multiline = false,
-  autoFocus = true
+  autoFocus = true,
+  statusHint = null
 }) {
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
@@ -42,6 +43,17 @@ export default function ChatInput({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
     >
+      {statusHint && (
+        <motion.div
+          key={statusHint}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-center text-sm mb-2"
+          style={{ color: 'var(--label-secondary)' }}
+        >
+          {statusHint}
+        </motion.div>
+      )}
       <div className="chat-input-bar flex items-center gap-3 p-2 pl-4 rounded-[24px]">
         {multiline ? (
           <textarea

@@ -77,37 +77,58 @@ test.describe('Cognitive Tools', () => {
       await expect(page.locator('h1, [class*="header"]')).toContainText(/5-4-3-2-1|заземлен/i);
     });
 
-    test('should show multi-input for senses', async ({ page }) => {
+    test('should show sequential input with status hint', async ({ page }) => {
       await page.goto('/tools/grounding');
 
       await page.waitForTimeout(3000);
 
-      // Multi-input component should appear for listing senses
-      const inputs = page.locator('input, textarea');
-      // Multiple input fields should exist
+      // Input field should appear for sequential answers
+      const input = page.locator('input[type="text"], textarea').last();
+      await expect(input).toBeVisible({ timeout: 5000 });
+
+      // Status hint should be visible above input
+      const hint = page.locator('text=/Напиши еще/i');
+      await expect(hint).toBeVisible({ timeout: 5000 });
     });
 
-    test('should accept multiple answers', async ({ page }) => {
+    test('should accept sequential answers and update status hint', async ({ page }) => {
       await page.goto('/tools/grounding');
 
       await page.waitForTimeout(3000);
 
-      // Try to fill in grounding responses
-      const inputs = page.locator('input, textarea');
+      // Find the input field
+      const input = page.locator('input[type="text"]').last();
+      await expect(input).toBeVisible({ timeout: 5000 });
 
-      try {
-        const count = await inputs.count();
-        if (count > 0) {
-          for (let i = 0; i < Math.min(count, 5); i++) {
-            const input = inputs.nth(i);
-            if (await input.isVisible()) {
-              await input.fill(`Ответ ${i + 1}`);
-            }
-          }
-        }
-      } catch {
-        // Flow might not be at multi-input stage
+      // Enter first answer
+      await input.fill('Монитор');
+      await page.keyboard.press('Enter');
+      await page.waitForTimeout(300);
+
+      // User message should appear in chat
+      await expect(page.locator('text=Монитор')).toBeVisible();
+
+      // Status hint should update (4 remaining)
+      const hint = page.locator('text=/Напиши еще 4/i');
+      await expect(hint).toBeVisible({ timeout: 3000 });
+    });
+
+    test('should progress to next sense after all items entered', async ({ page }) => {
+      await page.goto('/tools/grounding');
+
+      await page.waitForTimeout(3000);
+
+      // Enter 5 items for "vision" sense
+      for (let i = 1; i <= 5; i++) {
+        const input = page.locator('input[type="text"]').last();
+        await expect(input).toBeVisible({ timeout: 3000 });
+        await input.fill(`Предмет ${i}`);
+        await page.keyboard.press('Enter');
+        await page.waitForTimeout(500);
       }
+
+      // Should show next therapist message about touch sense
+      await expect(page.locator('text=/ПОТРОГАТЬ/i')).toBeVisible({ timeout: 5000 });
     });
   });
 });

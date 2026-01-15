@@ -159,6 +159,7 @@ export default function ChatContainer({
             onSubmit={onUserInput}
             placeholder={awaitingInput.placeholder || 'Напиши ответ...'}
             multiline={awaitingInput.multiline}
+            statusHint={awaitingInput.statusHint}
           />
         </div>
       )}
