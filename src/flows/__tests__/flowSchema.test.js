@@ -9,6 +9,10 @@ import {
   morningFlow,
   eveningFlow,
   viewFromAboveFlow,
+  doubleStandardFlow,
+  tripleColumnFlow,
+  factsVsFeelingsFlow,
+  shouldStatementsFlow,
   flowsById,
   getFlowById,
 } from '../index';
@@ -24,6 +28,10 @@ const allFlows = [
   morningFlow,
   eveningFlow,
   viewFromAboveFlow,
+  doubleStandardFlow,
+  tripleColumnFlow,
+  factsVsFeelingsFlow,
+  shouldStatementsFlow,
 ];
 
 // Flow names for readable test output
@@ -37,6 +45,10 @@ const flowNames = [
   'morningFlow',
   'eveningFlow',
   'viewFromAboveFlow',
+  'doubleStandardFlow',
+  'tripleColumnFlow',
+  'factsVsFeelingsFlow',
+  'shouldStatementsFlow',
 ];
 
 describe('Flow Schema Validation', () => {
@@ -110,15 +122,15 @@ describe('Flow Schema Validation', () => {
       expect(uniqueIds.size).toBe(allIds.length);
     });
 
-    it('should have 9 flows total', () => {
-      expect(allFlows).toHaveLength(9);
+    it('should have 13 flows total', () => {
+      expect(allFlows).toHaveLength(13);
     });
   });
 });
 
 describe('flowsById', () => {
-  it('should contain all 9 flows', () => {
-    expect(Object.keys(flowsById)).toHaveLength(9);
+  it('should contain all 13 flows', () => {
+    expect(Object.keys(flowsById)).toHaveLength(13);
   });
 
   it('should have correct mappings', () => {
@@ -131,6 +143,10 @@ describe('flowsById', () => {
     expect(flowsById['morning']).toBe(morningFlow);
     expect(flowsById['evening']).toBe(eveningFlow);
     expect(flowsById['view-from-above']).toBe(viewFromAboveFlow);
+    expect(flowsById['double-standard']).toBe(doubleStandardFlow);
+    expect(flowsById['triple-column']).toBe(tripleColumnFlow);
+    expect(flowsById['facts-vs-feelings']).toBe(factsVsFeelingsFlow);
+    expect(flowsById['should-statements']).toBe(shouldStatementsFlow);
   });
 
   it('should have IDs that match flow.id property', () => {

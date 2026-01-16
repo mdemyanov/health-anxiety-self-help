@@ -7,6 +7,10 @@ import { dichotomyFlow } from './dichotomyFlow';
 import { morningFlow } from './morningFlow';
 import { eveningFlow } from './eveningFlow';
 import { viewFromAboveFlow } from './viewFromAboveFlow';
+import { doubleStandardFlow } from './doubleStandardFlow';
+import { tripleColumnFlow } from './tripleColumnFlow';
+import { factsVsFeelingsFlow } from './factsVsFeelingsFlow';
+import { shouldStatementsFlow } from './shouldStatementsFlow';
 
 export {
   abcFlow,
@@ -18,6 +22,10 @@ export {
   morningFlow,
   eveningFlow,
   viewFromAboveFlow,
+  doubleStandardFlow,
+  tripleColumnFlow,
+  factsVsFeelingsFlow,
+  shouldStatementsFlow,
 };
 
 // Flow map for easy access by ID
@@ -31,6 +39,10 @@ export const flowsById = {
   'morning': morningFlow,
   'evening': eveningFlow,
   'view-from-above': viewFromAboveFlow,
+  'double-standard': doubleStandardFlow,
+  'triple-column': tripleColumnFlow,
+  'facts-vs-feelings': factsVsFeelingsFlow,
+  'should-statements': shouldStatementsFlow,
 };
 
 export function getFlowById(id) {

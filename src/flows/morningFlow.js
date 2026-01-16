@@ -13,7 +13,7 @@ export const morningFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Эта 5-минутная практика поможет настроиться на день.',
+          content: 'Эта практика поможет настроиться на продуктивный день и снизить тревогу заранее.',
           delay: 800,
         },
       ],
@@ -36,7 +36,7 @@ export const morningFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Это не мрачное напоминание, а призыв жить полноценно.',
+          content: 'Это не мрачное напоминание, а призыв ценить время и фокусироваться на важном.',
           delay: 2200,
         },
       ],
@@ -51,10 +51,10 @@ export const morningFlow = {
         },
         {
           type: 'therapist-question',
-          content: 'Что может пойти не так сегодня? Как ты справишься?',
+          content: 'Какие сложности могут возникнуть сегодня? Как ты справишься?',
           delay: 1200,
           awaitInput: true,
-          inputPlaceholder: 'Сегодня может...',
+          inputPlaceholder: 'Сегодня может быть сложно... Я справлюсь, потому что...',
           saveAs: 'premeditatio',
           multiline: true,
         },
@@ -70,9 +70,9 @@ export const morningFlow = {
         },
         {
           type: 'quote',
-          content: 'Не требуй, чтобы дела шли так, как ты хочешь. Желай, чтобы они шли так, как идут, и будешь счастлив.',
+          content: 'Судьба ведёт того, кто хочет, и тащит того, кто не хочет.',
           options: {
-            author: 'Эпиктет',
+            author: 'Сенека',
           },
           delay: 1000,
         },
@@ -86,8 +86,22 @@ export const morningFlow = {
           content: 'Что сегодня в твоей власти? На чём сосредоточишь энергию?',
           delay: 500,
           awaitInput: true,
-          inputPlaceholder: 'В моей власти...',
+          inputPlaceholder: 'В моей власти сегодня...',
           saveAs: 'dichotomy',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'priorities',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'Какие 3 главные задачи ты хочешь выполнить сегодня?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: '1. ...\n2. ...\n3. ...',
+          saveAs: 'priorities',
           multiline: true,
         },
       ],
@@ -102,10 +116,10 @@ export const morningFlow = {
         },
         {
           type: 'therapist-question',
-          content: 'Какое одно главное намерение у тебя на сегодня?',
+          content: 'Каким руководителем ты хочешь быть сегодня?',
           delay: 1000,
           awaitInput: true,
-          inputPlaceholder: 'Моё намерение...',
+          inputPlaceholder: 'Сегодня я хочу быть...',
           saveAs: 'intention',
           multiline: true,
         },
@@ -133,8 +147,11 @@ export const morningFlow = {
           delay: 800,
         },
         {
-          type: 'therapist-text',
-          content: 'Помни о своём намерении в течение дня.',
+          type: 'quote',
+          content: 'Утром, когда тебе не хочется вставать, скажи себе: я просыпаюсь, чтобы делать работу человека.',
+          options: {
+            author: 'Марк Аврелий',
+          },
           delay: 1500,
         },
       ],

@@ -11,6 +11,11 @@ export const eveningFlow = {
           content: 'Добрый вечер! Давай подведём итоги дня.',
           delay: 0,
         },
+        {
+          type: 'therapist-text',
+          content: 'Вечерняя рефлексия — это практика Сенеки, который каждый вечер анализировал прошедший день.',
+          delay: 800,
+        },
       ],
     },
     {
@@ -57,11 +62,25 @@ export const eveningFlow = {
       messages: [
         {
           type: 'therapist-question',
-          content: 'Что хорошего произошло сегодня? Назови 3 вещи.',
+          content: 'Что хорошего произошло сегодня? Назови 3 вещи — рабочие или личные.',
           delay: 500,
           awaitInput: true,
-          inputPlaceholder: 'Сегодня было хорошо...',
+          inputPlaceholder: '1. ...\n2. ...\n3. ...',
           saveAs: 'what_went_well',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'wins',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'Какие решения ты принял сегодня, которыми доволен?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'Я доволен тем, что...',
+          saveAs: 'wins',
           multiline: true,
         },
       ],
@@ -71,10 +90,10 @@ export const eveningFlow = {
       messages: [
         {
           type: 'therapist-question',
-          content: 'Чему ты научился сегодня?',
+          content: 'Чему ты научился сегодня? Что нового узнал — о работе, о себе, о людях?',
           delay: 500,
           awaitInput: true,
-          inputPlaceholder: 'Я научился...',
+          inputPlaceholder: 'Я узнал / научился...',
           saveAs: 'what_learned',
           multiline: true,
         },
@@ -85,10 +104,10 @@ export const eveningFlow = {
       messages: [
         {
           type: 'therapist-question',
-          content: 'Что можно было сделать лучше?',
+          content: 'Что можно было сделать лучше? Без самокритики — просто наблюдение.',
           delay: 500,
           awaitInput: true,
-          inputPlaceholder: 'Можно было бы...',
+          inputPlaceholder: 'В следующий раз я...',
           saveAs: 'what_could_improve',
           multiline: true,
         },
@@ -99,7 +118,7 @@ export const eveningFlow = {
       messages: [
         {
           type: 'therapist-question',
-          content: 'За что ты благодарен сегодня?',
+          content: 'За что ты благодарен сегодня? Это может быть что угодно — работа, семья, здоровье, момент тишины.',
           delay: 500,
           awaitInput: true,
           inputPlaceholder: 'Я благодарен за...',
@@ -113,7 +132,7 @@ export const eveningFlow = {
       messages: [
         {
           type: 'therapist-text',
-          content: 'Теперь отпусти день.',
+          content: 'Теперь отпусти день. Всё, что случилось — уже в прошлом.',
           delay: 500,
         },
         {
@@ -136,7 +155,7 @@ export const eveningFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Ты сделал всё, что мог сегодня. Завтра — новый день.',
+          content: 'Ты сделал всё, что мог сегодня. Завтра — новый день и новые возможности.',
           delay: 1200,
         },
         {
@@ -158,6 +177,7 @@ export const eveningFlow = {
         reflections.unshift({
           date: new Date().toISOString(),
           what_went_well: data.what_went_well,
+          wins: data.wins,
           what_learned: data.what_learned,
           what_could_improve: data.what_could_improve,
           gratitude: data.gratitude,

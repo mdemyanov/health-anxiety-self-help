@@ -3,8 +3,8 @@ import { quotes, getRandomQuote, getQuoteOfDay } from '../quotes';
 
 describe('quotes data', () => {
   describe('quotes array', () => {
-    it('should contain 15 quotes', () => {
-      expect(quotes).toHaveLength(15);
+    it('should contain 40 quotes', () => {
+      expect(quotes).toHaveLength(40);
     });
 
     it('should have unique IDs', () => {
@@ -31,9 +31,10 @@ describe('quotes data', () => {
       });
     });
 
-    it('should have IDs from 1 to 15', () => {
+    it('should have IDs from 1 to 40', () => {
       const ids = quotes.map((q) => q.id).sort((a, b) => a - b);
-      expect(ids).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
+      const expectedIds = Array.from({ length: 40 }, (_, i) => i + 1);
+      expect(ids).toEqual(expectedIds);
     });
 
     it('should contain quotes from Stoic philosophers', () => {

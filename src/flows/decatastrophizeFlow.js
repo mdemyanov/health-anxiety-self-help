@@ -13,7 +13,7 @@ export const decatastrophizeFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Эта техника поможет увидеть ситуацию более реалистично.',
+          content: 'Эта техника поможет увидеть ситуацию более реалистично — будь то рабочий кризис, беспокойство о здоровье или семейные тревоги.',
           delay: 800,
         },
       ],
@@ -26,7 +26,7 @@ export const decatastrophizeFlow = {
           content: 'Чего ты боишься? Опиши свой страх или тревожную мысль.',
           delay: 500,
           awaitInput: true,
-          inputPlaceholder: 'Я боюсь, что...',
+          inputPlaceholder: 'Например: провал проекта, потеря клиента, проблемы со здоровьем...',
           saveAs: 'fear',
           multiline: true,
         },
@@ -42,7 +42,7 @@ export const decatastrophizeFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Насколько вероятно, что твой страх реален?',
+          content: 'Насколько вероятно, что твой страх сбудется?',
           delay: 1000,
         },
         {
@@ -92,6 +92,20 @@ export const decatastrophizeFlow = {
           awaitInput: true,
           inputPlaceholder: 'В худшем случае...',
           saveAs: 'worst_case',
+          multiline: true,
+        },
+      ],
+    },
+    {
+      id: 'coping',
+      messages: [
+        {
+          type: 'therapist-question',
+          content: 'Если худший сценарий случится — как ты справишься? Какие у тебя есть ресурсы?',
+          delay: 500,
+          awaitInput: true,
+          inputPlaceholder: 'Я смогу справиться, потому что...',
+          saveAs: 'coping',
           multiline: true,
         },
       ],
@@ -158,9 +172,15 @@ export const decatastrophizeFlow = {
           delay: 1000,
         },
         {
-          type: 'therapist-text',
-          content: 'Видишь? Анализ помогает снизить тревогу и увидеть ситуацию более реалистично.',
+          type: 'quote',
+          content: 'Мы страдаем чаще в воображении, чем в реальности.',
+          options: { author: 'Сенека' },
           delay: 2500,
+        },
+        {
+          type: 'therapist-text',
+          content: 'Анализ помогает отделить реальные риски от воображаемых катастроф.',
+          delay: 3500,
         },
       ],
     },

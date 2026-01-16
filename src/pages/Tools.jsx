@@ -34,9 +34,25 @@ export default function Tools() {
               <p className="headline">📝 Дневник ABC</p>
               <p className="secondary-text text-sm">Запись и анализ мыслей</p>
             </ActionCard>
+            <ActionCard to="/tools/triple-column">
+              <p className="headline">📊 Три колонки</p>
+              <p className="secondary-text text-sm">Мысль → искажение → ответ</p>
+            </ActionCard>
             <ActionCard to="/tools/decatastrophize">
               <p className="headline">🔍 Декатастрофизация</p>
               <p className="secondary-text text-sm">Разбор катастрофических мыслей</p>
+            </ActionCard>
+            <ActionCard to="/tools/facts-vs-feelings">
+              <p className="headline">📋 Факты vs Чувства</p>
+              <p className="secondary-text text-sm">Отделить реальность от интерпретаций</p>
+            </ActionCard>
+            <ActionCard to="/tools/double-standard">
+              <p className="headline">🤝 Двойной стандарт</p>
+              <p className="secondary-text text-sm">Что бы ты сказал другу?</p>
+            </ActionCard>
+            <ActionCard to="/tools/should-statements">
+              <p className="headline">🎯 Работа с "должен"</p>
+              <p className="secondary-text text-sm">Трансформация долженствований</p>
             </ActionCard>
             <ActionCard to="/tools/dichotomy">
               <p className="headline">⚖️ Дихотомия контроля</p>

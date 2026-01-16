@@ -13,8 +13,13 @@ export const sosFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Начнём с дыхания — это активирует парасимпатическую нервную систему и поможет телу успокоиться.',
+          content: 'Неважно, что вызвало тревогу — срочное совещание, сложное решение или беспокойство о здоровье. Мы справимся.',
           delay: 1000,
+        },
+        {
+          type: 'therapist-text',
+          content: 'Начнём с дыхания — это активирует парасимпатическую нервную систему и поможет телу успокоиться.',
+          delay: 2000,
         },
       ],
     },
@@ -49,7 +54,7 @@ export const sosFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Эта техника поможет вернуться в настоящий момент.',
+          content: 'Эта техника поможет вернуться в настоящий момент — из мыслей о будущем или прошлом.',
           delay: 1500,
         },
       ],
@@ -67,7 +72,7 @@ export const sosFlow = {
           options: {
             count: 5,
             placeholder: 'Я вижу...',
-            statusHintTemplate: 'Напиши еще {remaining}',
+            statusHintTemplate: 'Напиши ещё {remaining}',
           },
           delay: 1000,
           awaitCompletion: true,
@@ -88,7 +93,7 @@ export const sosFlow = {
           options: {
             count: 4,
             placeholder: 'Я трогаю...',
-            statusHintTemplate: 'Напиши еще {remaining}',
+            statusHintTemplate: 'Напиши ещё {remaining}',
           },
           delay: 800,
           awaitCompletion: true,
@@ -109,7 +114,7 @@ export const sosFlow = {
           options: {
             count: 3,
             placeholder: 'Я слышу...',
-            statusHintTemplate: 'Напиши еще {remaining}',
+            statusHintTemplate: 'Напиши ещё {remaining}',
           },
           delay: 800,
           awaitCompletion: true,
@@ -130,7 +135,7 @@ export const sosFlow = {
           options: {
             count: 2,
             placeholder: 'Я чувствую запах...',
-            statusHintTemplate: 'Напиши еще {remaining}',
+            statusHintTemplate: 'Напиши ещё {remaining}',
           },
           delay: 800,
           awaitCompletion: true,
@@ -151,7 +156,7 @@ export const sosFlow = {
           options: {
             count: 1,
             placeholder: 'Я ощущаю вкус...',
-            statusHintTemplate: 'Напиши еще {remaining}',
+            statusHintTemplate: 'Напиши ещё {remaining}',
           },
           delay: 800,
           awaitCompletion: true,
@@ -192,12 +197,35 @@ export const sosFlow = {
           options: {
             title: 'Могу контролировать',
             color: 'var(--apple-green)',
-            items: ['Мои действия', 'Мои мысли', 'Мой выбор', 'Как я реагирую'],
+            items: [
+              'Мои решения и действия',
+              'Как я реагирую на ситуацию',
+              'Качество моей подготовки',
+              'К кому обращусь за помощью',
+              'Как позабочусь о себе сегодня',
+            ],
             secondaryTitle: 'Не могу контролировать',
             secondaryColor: 'var(--apple-red)',
-            secondaryItems: ['Мнение других', 'Прошлое', 'Будущее', 'Результаты анализов'],
+            secondaryItems: [
+              'Решения других людей',
+              'Рыночная ситуация',
+              'Прошлые ошибки',
+              'Результаты, которые ещё не известны',
+              'Мнение и реакции окружающих',
+            ],
           },
           delay: 1000,
+        },
+      ],
+    },
+    {
+      id: 'quote',
+      messages: [
+        {
+          type: 'quote',
+          content: 'Из всего существующего одно находится в нашей власти, другое — нет. В нашей власти — наши мнения, побуждения, желания. Не в нашей власти — тело, имущество, репутация.',
+          options: { author: 'Эпиктет' },
+          delay: 500,
         },
       ],
     },
@@ -211,12 +239,12 @@ export const sosFlow = {
         },
         {
           type: 'therapist-text',
-          content: 'Помни: тревога временна, и у тебя есть инструменты, чтобы с ней справиться.',
+          content: 'Помни: тревога временна. Она не определяет тебя и не предсказывает будущее.',
           delay: 1200,
         },
         {
           type: 'therapist-text',
-          content: 'Каждый раз, когда ты это делаешь, ты становишься сильнее.',
+          content: 'Каждый раз, когда ты это делаешь, ты тренируешь навык управления стрессом.',
           delay: 2000,
         },
       ],

@@ -31,6 +31,10 @@ function App() {
             <Route path="/tools/abc" element={<ChatTool flowId="abc-diary" />} />
             <Route path="/tools/decatastrophize" element={<ChatTool flowId="decatastrophize" />} />
             <Route path="/tools/dichotomy" element={<ChatTool flowId="dichotomy" />} />
+            <Route path="/tools/double-standard" element={<ChatTool flowId="double-standard" />} />
+            <Route path="/tools/triple-column" element={<ChatTool flowId="triple-column" />} />
+            <Route path="/tools/facts-vs-feelings" element={<ChatTool flowId="facts-vs-feelings" />} />
+            <Route path="/tools/should-statements" element={<ChatTool flowId="should-statements" />} />
 
             {/* Non-chat tools (breathing stays as is) */}
             <Route path="/tools/breathing" element={<BoxBreathing />} />
