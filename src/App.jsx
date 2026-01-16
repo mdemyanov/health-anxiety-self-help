@@ -7,6 +7,8 @@ import Home from './pages/Home';
 import Tools from './pages/Tools';
 import Stoic from './pages/Stoic';
 import Diary from './pages/Diary';
+import Settings from './pages/Settings';
+import Statistics from './pages/Statistics';
 import ChatTool from './pages/chat/ChatTool';
 import { AbcDetail } from './pages/tools/index';
 import { BoxBreathing, Breathing478 } from './pages/breathing/index';
@@ -52,6 +54,10 @@ function App() {
             {/* Diary */}
             <Route path="/diary/:id" element={<AbcDetail />} />
             <Route path="/diary/mood" element={<MoodTracker />} />
+            <Route path="/diary/statistics" element={<Statistics />} />
+
+            {/* Settings */}
+            <Route path="/settings" element={<Settings />} />
           </Routes>
 
           <TabBar />

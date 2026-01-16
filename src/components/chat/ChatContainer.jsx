@@ -154,7 +154,7 @@ export default function ChatContainer({
 
       {/* Input */}
       {awaitingInput && (
-        <div className="sticky bottom-0 px-4 py-3 safe-area-bottom" style={{ background: 'linear-gradient(to top, var(--background) 80%, transparent)' }}>
+        <div className="sticky bottom-0 z-40 px-4 py-3 safe-area-bottom" style={{ background: 'linear-gradient(to top, var(--background) 80%, transparent)' }}>
           <ChatInput
             onSubmit={onUserInput}
             placeholder={awaitingInput.placeholder || 'Напиши ответ...'}

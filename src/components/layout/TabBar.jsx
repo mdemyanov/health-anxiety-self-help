@@ -49,9 +49,15 @@ export default function TabBar() {
   const location = useLocation();
 
   // Hide TabBar on chat pages
-  const hiddenPaths = ['/sos', '/tools/stop-pause', '/tools/grounding', '/tools/abc',
-    '/tools/decatastrophize', '/tools/dichotomy', '/stoic/morning', '/stoic/evening',
-    '/stoic/view-from-above'];
+  const hiddenPaths = [
+    '/sos',
+    '/tools/stop-pause', '/tools/grounding', '/tools/abc',
+    '/tools/decatastrophize', '/tools/dichotomy',
+    '/tools/double-standard', '/tools/triple-column',
+    '/tools/facts-vs-feelings', '/tools/should-statements',
+    '/stoic/morning', '/stoic/evening', '/stoic/view-from-above',
+    '/settings'
+  ];
 
   if (hiddenPaths.some(path => location.pathname.startsWith(path))) {
     return null;

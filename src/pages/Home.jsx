@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen pb-tab-bar">
-      <Header title="Спокойствие" />
+      <Header title="Спокойствие" showSettings />
 
       <main className="px-4 space-y-6">
         {/* SOS Button - prominent at top */}

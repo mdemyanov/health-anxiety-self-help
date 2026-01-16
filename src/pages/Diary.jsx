@@ -8,7 +8,8 @@ export default function Diary() {
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('abcEntries');
+    // Пробуем новый ключ, потом старый для обратной совместимости
+    const saved = localStorage.getItem('abc-entries') || localStorage.getItem('abcEntries');
     if (saved) {
       setEntries(JSON.parse(saved));
     }
@@ -19,11 +20,28 @@ export default function Diary() {
       <div className="min-h-screen pb-tab-bar">
         <Header title="Мой дневник" />
 
-        <main className="px-4">
-          <div className="text-center py-12">
+        <main className="px-4 space-y-4">
+          {/* Quick actions */}
+          <div className="flex gap-3">
+            <Button
+              variant="secondary"
+              className="flex-1"
+              onClick={() => navigate('/diary/mood')}
+            >
+              😊 Настроение
+            </Button>
+            <Button
+              variant="secondary"
+              onClick={() => navigate('/diary/statistics')}
+            >
+              📊
+            </Button>
+          </div>
+
+          <div className="text-center py-8">
             <p className="text-5xl mb-4">📓</p>
             <p className="secondary-text mb-6">
-              Записей пока нет. Начни вести дневник мыслей.
+              Записей ABC-дневника пока нет. Начни вести дневник мыслей.
             </p>
             <Button onClick={() => navigate('/tools/abc')}>
               Создать запись
@@ -39,18 +57,42 @@ export default function Diary() {
       <Header title="Мой дневник" />
 
       <main className="px-4">
-        <Button
-          variant="tinted"
-          className="mb-4"
-          onClick={() => navigate('/tools/abc')}
-        >
-          + Новая запись
-        </Button>
+        {/* Quick actions */}
+        <div className="flex gap-3 mb-4">
+          <Button
+            variant="tinted"
+            className="flex-1"
+            onClick={() => navigate('/tools/abc')}
+          >
+            + ABC-запись
+          </Button>
+          <Button
+            variant="secondary"
+            className="flex-1"
+            onClick={() => navigate('/diary/mood')}
+          >
+            😊 Настроение
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => navigate('/diary/statistics')}
+          >
+            📊
+          </Button>
+        </div>
 
         <div className="space-y-3">
           {entries.map((entry) => {
-            const hasImproved = entry.emotionAfter !== undefined &&
-              entry.emotionInt > entry.emotionAfter;
+            // Поддержка обоих форматов: новый (A,B,C,D,E) и старый (situation, thought)
+            const situation = entry.A || entry.situation;
+            const thought = entry.B || entry.thought;
+            const dateStr = entry.date
+              ? new Date(entry.date).toLocaleDateString('ru-RU', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })
+              : '—';
 
             return (
               <Card
@@ -59,30 +101,14 @@ export default function Diary() {
                 onClick={() => navigate(`/diary/${entry.id}`)}
               >
                 <div className="flex justify-between items-start mb-2">
-                  <span className="caption">{entry.date}</span>
-                  <div className="flex items-center gap-2">
-                    {hasImproved && (
-                      <span className="text-xs" style={{ color: 'var(--apple-green)' }}>↓</span>
-                    )}
-                    <span
-                      className="caption px-2 py-1 rounded-full"
-                      style={{ background: 'rgba(0, 122, 255, 0.15)', color: 'var(--apple-blue)' }}
-                    >
-                      {entry.emotion} {entry.emotionInt}/10
-                    </span>
-                  </div>
+                  <span className="caption">{dateStr}</span>
                 </div>
                 <p className="body-text text-sm mb-1">
-                  <strong>Ситуация:</strong> {entry.situation || '—'}
+                  <strong>Событие:</strong> {situation || '—'}
                 </p>
-                <p className="secondary-text text-sm mb-2">
-                  <strong>Мысль:</strong> {entry.thought || '—'}
+                <p className="secondary-text text-sm line-clamp-2">
+                  <strong>Мысли:</strong> {thought || '—'}
                 </p>
-                {entry.alternative && (
-                  <p className="text-sm" style={{ color: 'var(--apple-green)' }}>
-                    <strong>Альтернатива:</strong> {entry.alternative}
-                  </p>
-                )}
               </Card>
             );
           })}
