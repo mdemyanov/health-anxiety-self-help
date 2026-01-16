@@ -166,6 +166,7 @@ export const decatastrophizeFlow = {
         {
           type: 'comparison',
           options: {
+            type: 'numeric',
             before: { label: 'До анализа', valueKey: 'probability' },
             after: { label: 'После анализа', valueKey: 'new_probability' },
           },

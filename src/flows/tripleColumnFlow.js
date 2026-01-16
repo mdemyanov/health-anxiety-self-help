@@ -149,6 +149,7 @@ export const tripleColumnFlow = {
         {
           type: 'comparison',
           options: {
+            type: 'text',
             before: { label: 'Автоматическая мысль', valueKey: 'automaticThought' },
             after: { label: 'Рациональный ответ', valueKey: 'rationalResponse' },
           },

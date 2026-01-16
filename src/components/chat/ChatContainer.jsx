@@ -106,6 +106,7 @@ export default function ChatContainer({
             after={message.options?.after}
             beforeValue={collectedData?.[message.options?.before?.valueKey]}
             afterValue={collectedData?.[message.options?.after?.valueKey]}
+            type={message.options?.type}
           />
         );
 

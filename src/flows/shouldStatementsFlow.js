@@ -174,6 +174,7 @@ export const shouldStatementsFlow = {
         {
           type: 'comparison',
           options: {
+            type: 'text',
             before: { label: 'Было', valueKey: 'shouldStatement' },
             after: { label: 'Стало', valueKey: 'reframe' },
           },

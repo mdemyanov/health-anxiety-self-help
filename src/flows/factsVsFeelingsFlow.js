@@ -110,6 +110,7 @@ export const factsVsFeelingsFlow = {
         {
           type: 'comparison',
           options: {
+            type: 'text',
             before: { label: 'Твои мысли', valueKey: 'thoughts' },
             after: { label: 'Только факты', valueKey: 'factsOnly' },
           },
