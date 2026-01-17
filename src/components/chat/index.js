@@ -11,6 +11,7 @@ export { default as ChatChecklist } from './messages/ChatChecklist';
 export { default as ChatQuote } from './messages/ChatQuote';
 export { default as ChatMultiInput } from './messages/ChatMultiInput';
 export { default as ChatComparison } from './messages/ChatComparison';
+export { default as ChatFeedback } from './messages/ChatFeedback';
 
 // Overlays
 export { default as BreathingOverlay } from './overlays/BreathingOverlay';

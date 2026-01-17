@@ -147,7 +147,7 @@ export const abcFlow = {
       ],
     },
     {
-      id: 'complete',
+      id: 'feedback',
       messages: [
         {
           type: 'therapist-text',
@@ -155,20 +155,34 @@ export const abcFlow = {
           delay: 500,
         },
         {
+          type: 'feedback',
+          delay: 1000,
+          saveAs: 'feedback',
+          options: {
+            moodLabel: 'Как ты себя сейчас чувствуешь?',
+            ratingLabel: 'Насколько полезной была практика?',
+          },
+        },
+      ],
+    },
+    {
+      id: 'complete',
+      messages: [
+        {
           type: 'quote',
           content: 'Не вещи беспокоят нас, а наши суждения о вещах.',
           options: { author: 'Эпиктет' },
-          delay: 1200,
+          delay: 500,
         },
         {
           type: 'therapist-text',
           content: 'Каждый раз, когда ты это делаешь, ты тренируешь навык рационального мышления.',
-          delay: 2000,
+          delay: 1200,
         },
         {
           type: 'system',
           content: 'Запись сохранена в дневник ✓',
-          delay: 2800,
+          delay: 2000,
         },
       ],
       onComplete: (data) => {
@@ -182,6 +196,7 @@ export const abcFlow = {
           D: data.D,
           E: data.E,
           distortions: data.distortions || [],
+          feedback: data.feedback,
         });
         localStorage.setItem('abc-entries', JSON.stringify(entries));
       },

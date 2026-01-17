@@ -192,9 +192,9 @@ export const decisionFlow = {
       ],
     },
 
-    // Шаг 10: Завершение
+    // Шаг 10: Обратная связь
     {
-      id: 'complete',
+      id: 'feedback',
       messages: [
         {
           type: 'therapist-text',
@@ -202,15 +202,31 @@ export const decisionFlow = {
           delay: 500,
         },
         {
+          type: 'feedback',
+          delay: 1000,
+          saveAs: 'feedback',
+          options: {
+            moodLabel: 'Как ты себя сейчас чувствуешь?',
+            ratingLabel: 'Насколько полезной была практика?',
+          },
+        },
+      ],
+    },
+
+    // Шаг 11: Завершение
+    {
+      id: 'complete',
+      messages: [
+        {
           type: 'quote',
           content: 'Счастье зависит от тебя самого.',
           options: { author: 'Марк Аврелий' },
-          delay: 1200,
+          delay: 500,
         },
         {
           type: 'system',
           content: 'Запись сохранена ✓',
-          delay: 2200,
+          delay: 1200,
         },
       ],
       onComplete: (data) => {
@@ -226,6 +242,7 @@ export const decisionFlow = {
           realisticCase: data.realisticCase,
           decision: data.decision,
           acceptance: data.acceptance,
+          feedback: data.feedback,
         });
         localStorage.setItem('decision-entries', JSON.stringify(entries));
       },

@@ -178,12 +178,52 @@ export const decatastrophizeFlow = {
           options: { author: 'Сенека' },
           delay: 2500,
         },
+      ],
+    },
+    {
+      id: 'feedback',
+      messages: [
         {
           type: 'therapist-text',
           content: 'Анализ помогает отделить реальные риски от воображаемых катастроф.',
-          delay: 3500,
+          delay: 500,
+        },
+        {
+          type: 'feedback',
+          delay: 1000,
+          saveAs: 'feedback',
+          options: {
+            moodLabel: 'Как ты себя сейчас чувствуешь?',
+            ratingLabel: 'Насколько полезной была практика?',
+          },
         },
       ],
+    },
+    {
+      id: 'complete',
+      messages: [
+        {
+          type: 'system',
+          content: 'Запись сохранена ✓',
+          delay: 500,
+        },
+      ],
+      onComplete: (data) => {
+        const entries = JSON.parse(localStorage.getItem('decatastrophize-entries') || '[]');
+        entries.unshift({
+          id: Date.now(),
+          date: new Date().toISOString(),
+          situation: data.situation,
+          probability: data.probability,
+          worst_case: data.worst_case,
+          coping: data.coping,
+          best_case: data.best_case,
+          realistic: data.realistic,
+          new_probability: data.new_probability,
+          feedback: data.feedback,
+        });
+        localStorage.setItem('decatastrophize-entries', JSON.stringify(entries));
+      },
     },
   ],
 };

@@ -11,6 +11,7 @@ import ChatChecklist from './messages/ChatChecklist';
 import ChatQuote from './messages/ChatQuote';
 import ChatMultiInput from './messages/ChatMultiInput';
 import ChatComparison from './messages/ChatComparison';
+import ChatFeedback from './messages/ChatFeedback';
 import BreathingOverlay from './overlays/BreathingOverlay';
 
 export default function ChatContainer({
@@ -114,6 +115,14 @@ export default function ChatContainer({
             beforeValue={collectedData?.[message.options?.before?.valueKey]}
             afterValue={collectedData?.[message.options?.after?.valueKey]}
             type={message.options?.type}
+          />
+        );
+
+      case 'feedback':
+        return (
+          <ChatFeedback
+            options={message.options}
+            onSubmit={(value) => onInteractionComplete?.(value)}
           />
         );
 

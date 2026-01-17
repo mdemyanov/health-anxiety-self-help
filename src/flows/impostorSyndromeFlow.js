@@ -172,9 +172,9 @@ export const impostorSyndromeFlow = {
       ],
     },
 
-    // Шаг 8: Завершение
+    // Шаг 8: Обратная связь
     {
-      id: 'complete',
+      id: 'feedback',
       messages: [
         {
           type: 'therapist-text',
@@ -182,20 +182,36 @@ export const impostorSyndromeFlow = {
           delay: 500,
         },
         {
+          type: 'feedback',
+          delay: 1000,
+          saveAs: 'feedback',
+          options: {
+            moodLabel: 'Как ты себя сейчас чувствуешь?',
+            ratingLabel: 'Насколько полезной была практика?',
+          },
+        },
+      ],
+    },
+
+    // Шаг 9: Завершение
+    {
+      id: 'complete',
+      messages: [
+        {
           type: 'therapist-text',
           content: 'Синдром самозванца — это не истина о тебе. Это искажённое восприятие, которое можно корректировать.',
-          delay: 1200,
+          delay: 500,
         },
         {
           type: 'quote',
           content: 'Единственный способ избежать критики — ничего не делать, ничего не говорить и быть никем.',
           options: { author: 'Аристотель' },
-          delay: 2200,
+          delay: 1200,
         },
         {
           type: 'system',
           content: 'Запись сохранена ✓',
-          delay: 3200,
+          delay: 2200,
         },
       ],
       onComplete: (data) => {
@@ -209,6 +225,7 @@ export const impostorSyndromeFlow = {
           externalView: data.externalView,
           reframedThought: data.reframedThought,
           actionPlan: data.actionPlan,
+          feedback: data.feedback,
         });
         localStorage.setItem('impostor-syndrome-entries', JSON.stringify(entries));
       },

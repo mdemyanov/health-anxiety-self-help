@@ -1,6 +1,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { logToolUsage } from '../utils/analytics';
 
+// Draft expiration: 24 hours
+const DRAFT_EXPIRY_MS = 24 * 60 * 60 * 1000;
+
 // Russian pluralization helper
 const pluralize = (count, one, few, many) => {
   const mod10 = count % 10;
@@ -78,6 +81,11 @@ export function useChatFlow(flowConfig) {
       } else {
         // Flow complete
         setIsComplete(true);
+
+        // Clear draft on completion
+        if (flowConfig?.id) {
+          localStorage.removeItem(`draft-${flowConfig.id}`);
+        }
 
         // Log tool usage
         if (flowConfig?.id) {
@@ -159,9 +167,9 @@ export function useChatFlow(flowConfig) {
           statusHint: formatStatusHint(statusHintTemplate, count),
         });
         // Do NOT advance currentMessageIndex - wait for all inputs
-      } else if (msgConfig.awaitCompletion) {
+      } else if (msgConfig.awaitCompletion || msgConfig.type === 'feedback') {
         setAwaitingCompletion({
-          saveAs: msgConfig.saveAs,
+          saveAs: msgConfig.saveAs || 'feedback',
         });
       } else {
         // Move to next message
@@ -303,6 +311,19 @@ export function useChatFlow(flowConfig) {
     };
   }, [currentMessageIndex, currentStepIndex, awaitingInput, awaitingCompletion, processNextMessage]);
 
+  // Auto-save draft when collectedData changes
+  useEffect(() => {
+    if (!flowConfig?.id || isComplete) return;
+    if (Object.keys(collectedData).length === 0) return;
+
+    const draftKey = `draft-${flowConfig.id}`;
+    localStorage.setItem(draftKey, JSON.stringify({
+      collectedData,
+      currentStepIndex,
+      timestamp: Date.now(),
+    }));
+  }, [collectedData, currentStepIndex, flowConfig?.id, isComplete]);
+
   // Go back to previous state (undo last user input)
   const goBack = useCallback(() => {
     if (history.length === 0) return;
@@ -323,8 +344,38 @@ export function useChatFlow(flowConfig) {
   // Computed: can go back?
   const canGoBack = history.length > 0 && !isComplete;
 
+  // Get draft for current flow
+  const getDraft = useCallback(() => {
+    if (!flowConfig?.id) return null;
+    const draftKey = `draft-${flowConfig.id}`;
+    try {
+      const draft = localStorage.getItem(draftKey);
+      if (!draft) return null;
+
+      const parsed = JSON.parse(draft);
+      // Check if draft is expired
+      if (Date.now() - parsed.timestamp > DRAFT_EXPIRY_MS) {
+        localStorage.removeItem(draftKey);
+        return null;
+      }
+      return parsed;
+    } catch {
+      return null;
+    }
+  }, [flowConfig?.id]);
+
+  // Clear draft for current flow
+  const clearDraft = useCallback(() => {
+    if (!flowConfig?.id) return;
+    localStorage.removeItem(`draft-${flowConfig.id}`);
+  }, [flowConfig?.id]);
+
   // Reset flow
   const reset = useCallback(() => {
+    // Clear draft when resetting
+    if (flowConfig?.id) {
+      localStorage.removeItem(`draft-${flowConfig.id}`);
+    }
     setMessages([]);
     setCurrentStepIndex(0);
     setCurrentMessageIndex(0);
@@ -338,7 +389,7 @@ export function useChatFlow(flowConfig) {
     setAwaitingBreathing(null);
     setAwaitingTimer(null);
     setHistory([]);
-  }, []);
+  }, [flowConfig?.id]);
 
   return {
     messages,
@@ -361,6 +412,8 @@ export function useChatFlow(flowConfig) {
     reset,
     goBack,
     canGoBack,
+    getDraft,
+    clearDraft,
     title: flowConfig?.title,
   };
 }
