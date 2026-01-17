@@ -106,15 +106,17 @@ export default function MorningPractice() {
   return (
     <div className="min-h-screen flex flex-col pb-24">
       {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800 z-50">
-        <div
-          className="h-full transition-all duration-300"
-          style={{ width: `${progress}%`, background: 'var(--apple-orange)' }}
-        />
+      <div className="fixed top-0 left-0 right-0 z-50 safe-area-top">
+        <div className="h-1 bg-gray-200 dark:bg-gray-800">
+          <div
+            className="h-full transition-all duration-300"
+            style={{ width: `${progress}%`, background: 'var(--apple-orange)' }}
+          />
+        </div>
       </div>
 
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between">
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 pt-5 pb-4 safe-area-top flex items-center justify-between">
         <button
           className="p-2 rounded-full"
           style={{ background: 'var(--card-secondary)' }}

@@ -306,7 +306,7 @@ describe('useChatFlow', () => {
   });
 
   describe('interaction completion', () => {
-    it('should handle interaction completion and save data', async () => {
+    it('should handle timer completion and save data', async () => {
       const flow = createTestFlow({
         steps: [
           {
@@ -315,8 +315,48 @@ describe('useChatFlow', () => {
               {
                 type: 'timer',
                 delay: 0,
-                awaitCompletion: true,
                 saveAs: 'timerDone',
+                options: { duration: 10 },
+              },
+            ],
+          },
+          {
+            id: 'complete',
+            messages: [
+              { type: 'system', content: 'Done', delay: 0 },
+            ],
+          },
+        ],
+      });
+
+      const { result } = renderHook(() => useChatFlow(flow));
+
+      await act(async () => {
+        vi.advanceTimersByTime(100);
+      });
+
+      // Timer now uses awaitingTimer state
+      expect(result.current.awaitingTimer).not.toBeNull();
+
+      act(() => {
+        result.current.handleTimerComplete();
+      });
+
+      expect(result.current.collectedData.timerDone).toBe(true);
+      expect(result.current.awaitingTimer).toBeNull();
+    });
+
+    it('should handle slider completion with awaitCompletion', async () => {
+      const flow = createTestFlow({
+        steps: [
+          {
+            id: 'intro',
+            messages: [
+              {
+                type: 'slider',
+                delay: 0,
+                awaitCompletion: true,
+                saveAs: 'sliderValue',
               },
             ],
           },
@@ -338,10 +378,10 @@ describe('useChatFlow', () => {
       expect(result.current.awaitingCompletion).not.toBeNull();
 
       act(() => {
-        result.current.handleInteractionComplete(true);
+        result.current.handleInteractionComplete(50);
       });
 
-      expect(result.current.collectedData.timerDone).toBe(true);
+      expect(result.current.collectedData.sliderValue).toBe(50);
       expect(result.current.awaitingCompletion).toBeNull();
     });
   });

@@ -1,6 +1,7 @@
 export { default as ChatContainer } from './ChatContainer';
 export { default as ChatMessage } from './ChatMessage';
 export { default as ChatInput } from './ChatInput';
+export { default as ChatTimerBar } from './ChatTimerBar';
 export { default as ChatTypingIndicator } from './ChatTypingIndicator';
 
 // Message types

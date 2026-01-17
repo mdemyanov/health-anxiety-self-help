@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
+import ChatTimerBar from './ChatTimerBar';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import ChatTimer from './messages/ChatTimer';
 import ChatSlider from './messages/ChatSlider';
@@ -17,9 +18,11 @@ export default function ChatContainer({
   messages,
   awaitingInput,
   awaitingBreathing,
+  awaitingTimer,
   isTyping,
   onUserInput,
   onInteractionComplete,
+  onTimerComplete,
   onBack,
   collectedData,
   breathingOverlay,
@@ -117,8 +120,8 @@ export default function ChatContainer({
         <div className="chat-header flex items-center gap-3 px-3 py-2.5 rounded-[20px]">
           <button
             onClick={handleBack}
-            className="relative z-10 w-9 h-9 flex items-center justify-center rounded-full transition-transform active:scale-90"
-            style={{ background: 'var(--glass-bg-button)' }}
+            className="relative z-10 w-11 h-11 flex items-center justify-center rounded-full transition-transform active:scale-90 focus-visible:ring-2 focus-visible:ring-offset-1"
+            style={{ background: 'var(--glass-bg-button)', '--tw-ring-color': 'var(--apple-blue)' }}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="15 18 9 12 15 6" />
@@ -180,6 +183,16 @@ export default function ChatContainer({
               </span>
             </div>
           </button>
+        </div>
+      )}
+
+      {/* Timer Progress Bar - shown in input area */}
+      {awaitingTimer && (
+        <div className="sticky bottom-0 z-40 px-4 py-3 safe-area-bottom" style={{ background: 'linear-gradient(to top, var(--background) 80%, transparent)' }}>
+          <ChatTimerBar
+            duration={awaitingTimer.duration}
+            onComplete={onTimerComplete}
+          />
         </div>
       )}
 

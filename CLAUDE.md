@@ -9,7 +9,7 @@
 PWA-приложение самопомощи для руководителей IT-компаний (35-50 лет).
 Объединяет КПТ (когнитивно-поведенческую терапию) и стоическую философию.
 
-**Версия**: 3.2 | **Стек**: React 18 + Vite + Tailwind CSS 4 + Framer Motion
+**Версия**: 4.0 | **Стек**: React 18 + Vite + Tailwind CSS 4 + Framer Motion
 
 ---
 
@@ -90,6 +90,43 @@ import LiquidGlass from 'liquid-glass-react';
 - Единообразное расположение кнопок действия (всегда внизу)
 
 **Реализация:** см. `awaitingBreathing` в `useChatFlow.js` и `BreathingOverlay` в `src/components/chat/overlays/`
+
+### 5. UX-паттерн: safe-area для iOS
+
+Все header'ы с кнопкой "Назад" **должны** использовать `safe-area-top` для корректного отображения на iPhone с notch:
+
+```jsx
+// ❌ НЕ ДЕЛАТЬ — кнопка попадёт под notch
+<div className="fixed top-0 left-0 right-0 z-40 px-4 py-4">
+
+// ✅ ПРАВИЛЬНО — добавить safe-area-top
+<div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 safe-area-top">
+```
+
+**Для страниц с progress bar:**
+```jsx
+// Progress bar тоже должен учитывать safe-area
+<div className="fixed top-0 left-0 right-0 z-50 safe-area-top">
+  <div className="h-1 bg-gray-200">
+    <div style={{ width: `${progress}%` }} />
+  </div>
+</div>
+
+// Header под progress bar — добавить pt-5 для отступа от progress bar
+<div className="fixed top-0 left-0 right-0 z-40 px-4 pt-5 pb-4 safe-area-top">
+```
+
+### 6. UX-паттерн: дыхательные анимации
+
+**Для круговых анимаций (BreathingOverlay):**
+- Начинать с `initial={{ scale: 0.6 }}` чтобы первый вдох был видимым
+- Использовать градиент `linear-gradient(135deg, var(--apple-blue), var(--apple-green))` для визуальной индикации фаз
+- Не использовать текст внутри круга — цвет достаточно информативен
+- Добавить `rotate: 0 → 180` для дополнительного визуального эффекта
+
+**Для квадратных анимаций (BoxBreathing):**
+- Использовать только `left`/`top` для позиционирования ползунка (не `right`/`bottom`)
+- Это обеспечивает корректную работу `-translate-x-1/2 -translate-y-1/2`
 
 ---
 

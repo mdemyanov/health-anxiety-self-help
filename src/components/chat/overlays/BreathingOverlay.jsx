@@ -53,7 +53,11 @@ export default function BreathingOverlay({
       {isOpen && (
         <motion.div
           className="fixed inset-0 z-50 flex flex-col items-center justify-center"
-          style={{ background: 'rgba(0, 0, 0, 0.4)' }}
+          style={{
+            background: 'rgba(0, 0, 0, 0.6)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)'
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -91,26 +95,26 @@ export default function BreathingOverlay({
             ) : (
               /* Active breathing state */
               <div className="flex flex-col items-center gap-6">
-                {/* Breathing circle */}
+                {/* Breathing circle with gradient */}
                 <div className="relative w-48 h-48 flex items-center justify-center">
                   <motion.div
-                    className="w-48 h-48 rounded-full flex items-center justify-center"
+                    className="w-48 h-48 rounded-full"
                     style={{
-                      background: 'var(--apple-blue)',
-                      boxShadow: '0 8px 32px rgba(0, 122, 255, 0.3)',
+                      background: 'linear-gradient(135deg, var(--apple-blue), var(--apple-green))',
+                      boxShadow: isInhale
+                        ? '0 8px 32px rgba(0, 122, 255, 0.4)'
+                        : '0 8px 32px rgba(52, 199, 89, 0.4)',
                     }}
+                    initial={{ scale: 0.6 }}
                     animate={{
                       scale: isInhale ? 1 : 0.6,
+                      rotate: isInhale ? 0 : 180,
                     }}
                     transition={{
                       duration: isInhale ? inhaleTime : exhaleTime,
                       ease: 'easeInOut',
                     }}
-                  >
-                    <span className="text-white text-2xl font-semibold">
-                      {isInhale ? 'Вдох' : 'Выдох'}
-                    </span>
-                  </motion.div>
+                  />
                 </div>
 
                 {/* Instructions */}

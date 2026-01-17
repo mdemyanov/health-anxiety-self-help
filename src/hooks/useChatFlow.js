@@ -28,6 +28,7 @@ export function useChatFlow(flowConfig) {
   const [isComplete, setIsComplete] = useState(false);
   const [breathingOverlay, setBreathingOverlay] = useState(null);
   const [awaitingBreathing, setAwaitingBreathing] = useState(null);
+  const [awaitingTimer, setAwaitingTimer] = useState(null);
 
   const timeoutRef = useRef(null);
   const typingTimeoutRef = useRef(null);
@@ -103,6 +104,15 @@ export function useChatFlow(flowConfig) {
         setAwaitingBreathing({
           pattern: msgConfig.options?.pattern || '4-4',
           cycles: msgConfig.options?.cycles || 3,
+          saveAs: msgConfig.saveAs,
+        });
+        return;
+      }
+
+      // Handle timer type - show progress bar in input area
+      if (msgConfig.type === 'timer') {
+        setAwaitingTimer({
+          duration: msgConfig.options?.duration || 10,
           saveAs: msgConfig.saveAs,
         });
         return;
@@ -237,6 +247,19 @@ export function useChatFlow(flowConfig) {
     setCurrentMessageIndex((prev) => prev + 1);
   }, []);
 
+  // Handle timer completion
+  const handleTimerComplete = useCallback(() => {
+    // Save data if needed
+    if (awaitingTimer?.saveAs) {
+      setCollectedData((prev) => ({
+        ...prev,
+        [awaitingTimer.saveAs]: true,
+      }));
+    }
+    setAwaitingTimer(null);
+    setCurrentMessageIndex((prev) => prev + 1);
+  }, [awaitingTimer]);
+
   // Process messages when step/message index changes
   useEffect(() => {
     // Clear any pending timeouts
@@ -248,7 +271,7 @@ export function useChatFlow(flowConfig) {
     }
 
     // Only process if not waiting for user
-    if (!awaitingInput && !awaitingCompletion && !awaitingBreathing) {
+    if (!awaitingInput && !awaitingCompletion && !awaitingBreathing && !awaitingTimer) {
       processNextMessage();
     }
 
@@ -275,6 +298,7 @@ export function useChatFlow(flowConfig) {
     setIsComplete(false);
     setBreathingOverlay(null);
     setAwaitingBreathing(null);
+    setAwaitingTimer(null);
   }, []);
 
   return {
@@ -284,6 +308,7 @@ export function useChatFlow(flowConfig) {
     awaitingInput,
     awaitingCompletion,
     awaitingBreathing,
+    awaitingTimer,
     isTyping,
     collectedData,
     isComplete,
@@ -291,6 +316,7 @@ export function useChatFlow(flowConfig) {
     handleInteractionComplete,
     handleBreathingStart,
     handleBreathingComplete,
+    handleTimerComplete,
     breathingOverlay,
     reset,
     title: flowConfig?.title,

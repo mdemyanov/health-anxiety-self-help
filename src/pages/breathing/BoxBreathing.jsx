@@ -58,18 +58,18 @@ export default function BoxBreathing() {
     setIsActive(false);
   };
 
-  // Calculate box animation position
+  // Calculate box animation position (using left/top only for consistent translate behavior)
   const getBoxPosition = () => {
     const progress = 1 - timeLeft / phase.duration;
     switch (phaseIndex) {
       case 0: // Вдох - снизу вверх (левая сторона)
-        return { left: 0, bottom: `${progress * 100}%` };
+        return { left: 0, top: `${(1 - progress) * 100}%` };
       case 1: // Задержка - слева направо (верх)
         return { left: `${progress * 100}%`, top: 0 };
       case 2: // Выдох - сверху вниз (правая сторона)
-        return { right: 0, top: `${progress * 100}%` };
+        return { left: '100%', top: `${progress * 100}%` };
       case 3: // Задержка - справа налево (низ)
-        return { right: `${progress * 100}%`, bottom: 0 };
+        return { left: `${(1 - progress) * 100}%`, top: '100%' };
       default:
         return {};
     }
@@ -78,7 +78,7 @@ export default function BoxBreathing() {
   return (
     <div className="min-h-screen flex flex-col pb-24">
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between">
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 safe-area-top flex items-center justify-between">
         <button
           className="p-2 rounded-full"
           style={{ background: 'var(--card-secondary)' }}

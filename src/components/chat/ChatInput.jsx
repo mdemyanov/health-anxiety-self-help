@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 export default function ChatInput({
@@ -12,17 +12,38 @@ export default function ChatInput({
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
 
+  // Auto-focus on mount
   useEffect(() => {
     if (autoFocus && inputRef.current && !disabled) {
       inputRef.current.focus();
     }
   }, [autoFocus, disabled]);
 
+  // Auto-expand textarea based on content (Telegram-style)
+  const adjustTextareaHeight = useCallback(() => {
+    const textarea = inputRef.current;
+    if (!textarea || !multiline) return;
+
+    // Reset height to auto to get accurate scrollHeight
+    textarea.style.height = 'auto';
+    // Set new height, max 144px (~6 lines)
+    const newHeight = Math.min(textarea.scrollHeight, 144);
+    textarea.style.height = `${newHeight}px`;
+  }, [multiline]);
+
+  useEffect(() => {
+    adjustTextareaHeight();
+  }, [value, adjustTextareaHeight]);
+
   const handleSubmit = () => {
     if (value.trim() && !disabled) {
       navigator.vibrate?.(30);
       onSubmit(value.trim());
       setValue('');
+      // Reset textarea height after submit
+      if (inputRef.current && multiline) {
+        inputRef.current.style.height = 'auto';
+      }
     }
   };
 
@@ -64,8 +85,13 @@ export default function ChatInput({
             placeholder={placeholder}
             disabled={disabled}
             rows={1}
-            className="relative z-10 flex-1 bg-transparent border-none outline-none text-base resize-none max-h-24"
-            style={{ color: 'var(--label)' }}
+            className="relative z-10 flex-1 bg-transparent border-none outline-none text-base resize-none overflow-hidden"
+            style={{
+              color: 'var(--label)',
+              minHeight: '24px',
+              maxHeight: '144px',
+              transition: 'height 0.1s ease-out'
+            }}
           />
         ) : (
           <input
@@ -82,12 +108,13 @@ export default function ChatInput({
         )}
 
         <button
-          className="relative z-10 w-10 h-10 flex items-center justify-center rounded-full transition-all active:scale-90"
+          className="relative z-10 w-11 h-11 flex items-center justify-center rounded-full transition-all active:scale-90 focus-visible:ring-2 focus-visible:ring-offset-1"
           disabled={!value.trim() || disabled}
           style={{
             opacity: !value.trim() || disabled ? 0.4 : 1,
             color: 'var(--apple-blue)',
-            background: 'var(--glass-bg-button)'
+            background: 'var(--glass-bg-button)',
+            '--tw-ring-color': 'var(--apple-blue)'
           }}
           onClick={handleSubmit}
         >

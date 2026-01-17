@@ -91,7 +91,7 @@ export default function MoodTracker() {
   return (
     <div className="min-h-screen pb-24">
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between"
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 safe-area-top flex items-center justify-between"
            style={{ background: 'var(--background)' }}>
         <button
           className="p-2 rounded-full"
