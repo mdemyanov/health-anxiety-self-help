@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function BreathingOverlay({
@@ -7,25 +7,23 @@ export default function BreathingOverlay({
   cycles = 3,
   onComplete
 }) {
-  const [phase, setPhase] = useState('idle'); // idle | inhale | exhale | complete
+  const [phase, setPhase] = useState('inhale'); // inhale | exhale | complete
   const [currentCycle, setCurrentCycle] = useState(0);
-  const [isActive, setIsActive] = useState(false);
 
   const [inhaleTime, exhaleTime] = pattern.split('-').map(Number);
   const phaseDuration = (phase === 'inhale' ? inhaleTime : exhaleTime) * 1000;
 
-  // Reset state when overlay opens
+  // Reset and auto-start when overlay opens
   useEffect(() => {
     if (isOpen) {
-      setPhase('idle');
+      setPhase('inhale');
       setCurrentCycle(0);
-      setIsActive(false);
     }
   }, [isOpen]);
 
   // Phase transition logic
   useEffect(() => {
-    if (!isActive || phase === 'idle' || phase === 'complete') return;
+    if (!isOpen || phase === 'complete') return;
 
     const timeout = setTimeout(() => {
       navigator.vibrate?.(20);
@@ -46,13 +44,7 @@ export default function BreathingOverlay({
     }, phaseDuration);
 
     return () => clearTimeout(timeout);
-  }, [phase, isActive, currentCycle, cycles, phaseDuration, onComplete]);
-
-  const handleStart = useCallback(() => {
-    navigator.vibrate?.(30);
-    setIsActive(true);
-    setPhase('inhale');
-  }, []);
+  }, [phase, isOpen, currentCycle, cycles, phaseDuration, onComplete]);
 
   const isInhale = phase === 'inhale';
 
@@ -96,23 +88,10 @@ export default function BreathingOverlay({
                   Отлично! Дыхание завершено
                 </span>
               </motion.div>
-            ) : !isActive ? (
-              /* Idle state - start button */
-              <div className="flex flex-col items-center gap-4">
-                <p className="callout text-center secondary-text max-w-xs">
-                  Следуй за кругом: вдох когда он увеличивается, выдох когда уменьшается
-                </p>
-                <button
-                  className="btn btn-filled px-8 py-4"
-                  onClick={handleStart}
-                >
-                  Начать дыхание ({cycles} цикла)
-                </button>
-              </div>
             ) : (
               /* Active breathing state */
               <div className="flex flex-col items-center gap-6">
-                {/* Breathing circle - size w-48 h-48 (larger for overlay) */}
+                {/* Breathing circle */}
                 <div className="relative w-48 h-48 flex items-center justify-center">
                   <motion.div
                     className="w-48 h-48 rounded-full flex items-center justify-center"

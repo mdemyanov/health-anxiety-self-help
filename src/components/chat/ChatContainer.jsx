@@ -16,12 +16,14 @@ export default function ChatContainer({
   title,
   messages,
   awaitingInput,
+  awaitingBreathing,
   isTyping,
   onUserInput,
   onInteractionComplete,
   onBack,
   collectedData,
   breathingOverlay,
+  onBreathingStart,
   onBreathingComplete
 }) {
   const navigate = useNavigate();
@@ -155,6 +157,29 @@ export default function ChatContainer({
             multiline={awaitingInput.multiline}
             statusHint={awaitingInput.statusHint}
           />
+        </div>
+      )}
+
+      {/* Breathing Start Button - shown in input area */}
+      {awaitingBreathing && !breathingOverlay && (
+        <div className="sticky bottom-0 z-40 px-4 py-3 safe-area-bottom" style={{ background: 'linear-gradient(to top, var(--background) 80%, transparent)' }}>
+          <button
+            onClick={onBreathingStart}
+            className="w-full card flex items-center justify-center gap-3 px-6 py-4 transition-transform active:scale-[0.98]"
+          >
+            <div
+              className="w-12 h-12 rounded-full flex items-center justify-center"
+              style={{ background: 'var(--apple-blue)' }}
+            >
+              <span className="text-white text-2xl">🫁</span>
+            </div>
+            <div className="flex flex-col items-start">
+              <span className="text-base font-semibold">Начать дыхательную практику</span>
+              <span className="text-sm" style={{ color: 'var(--label-secondary)' }}>
+                {awaitingBreathing.cycles} цикла · {awaitingBreathing.pattern.replace('-', '/')} сек
+              </span>
+            </div>
+          </button>
         </div>
       )}
 

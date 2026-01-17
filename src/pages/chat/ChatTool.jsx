@@ -10,9 +10,11 @@ export default function ChatTool({ flowId }) {
   const {
     messages,
     awaitingInput,
+    awaitingBreathing,
     isTyping,
     handleUserInput,
     handleInteractionComplete,
+    handleBreathingStart,
     handleBreathingComplete,
     breathingOverlay,
     collectedData,
@@ -41,12 +43,14 @@ export default function ChatTool({ flowId }) {
       title={title}
       messages={messages}
       awaitingInput={awaitingInput}
+      awaitingBreathing={awaitingBreathing}
       isTyping={isTyping}
       onUserInput={handleUserInput}
       onInteractionComplete={handleInteractionComplete}
       onBack={handleBack}
       collectedData={collectedData}
       breathingOverlay={breathingOverlay}
+      onBreathingStart={handleBreathingStart}
       onBreathingComplete={handleBreathingComplete}
     />
   );

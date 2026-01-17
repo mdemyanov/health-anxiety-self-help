@@ -27,6 +27,7 @@ export function useChatFlow(flowConfig) {
   const [collectedData, setCollectedData] = useState({});
   const [isComplete, setIsComplete] = useState(false);
   const [breathingOverlay, setBreathingOverlay] = useState(null);
+  const [awaitingBreathing, setAwaitingBreathing] = useState(null);
 
   const timeoutRef = useRef(null);
   const typingTimeoutRef = useRef(null);
@@ -97,18 +98,13 @@ export function useChatFlow(flowConfig) {
     timeoutRef.current = setTimeout(() => {
       setIsTyping(false);
 
-      // Handle breathing type - open overlay instead of adding message
+      // Handle breathing type - show button in input area, user initiates overlay
       if (msgConfig.type === 'breathing') {
-        setBreathingOverlay({
+        setAwaitingBreathing({
           pattern: msgConfig.options?.pattern || '4-4',
           cycles: msgConfig.options?.cycles || 3,
+          saveAs: msgConfig.saveAs,
         });
-        if (msgConfig.awaitCompletion) {
-          setAwaitingCompletion({
-            type: 'breathing',
-            saveAs: msgConfig.saveAs,
-          });
-        }
         return;
       }
 
@@ -224,10 +220,20 @@ export function useChatFlow(flowConfig) {
     setCurrentMessageIndex((prev) => prev + 1);
   }, [awaitingCompletion]);
 
+  // Handle breathing start (user clicks button to open overlay)
+  const handleBreathingStart = useCallback(() => {
+    if (!awaitingBreathing) return;
+    navigator.vibrate?.(30);
+    setBreathingOverlay({
+      pattern: awaitingBreathing.pattern,
+      cycles: awaitingBreathing.cycles,
+    });
+  }, [awaitingBreathing]);
+
   // Handle breathing overlay completion
   const handleBreathingComplete = useCallback(() => {
     setBreathingOverlay(null);
-    setAwaitingCompletion(null);
+    setAwaitingBreathing(null);
     setCurrentMessageIndex((prev) => prev + 1);
   }, []);
 
@@ -242,7 +248,7 @@ export function useChatFlow(flowConfig) {
     }
 
     // Only process if not waiting for user
-    if (!awaitingInput && !awaitingCompletion) {
+    if (!awaitingInput && !awaitingCompletion && !awaitingBreathing) {
       processNextMessage();
     }
 
@@ -268,6 +274,7 @@ export function useChatFlow(flowConfig) {
     setCollectedData({});
     setIsComplete(false);
     setBreathingOverlay(null);
+    setAwaitingBreathing(null);
   }, []);
 
   return {
@@ -276,11 +283,13 @@ export function useChatFlow(flowConfig) {
     currentStepIndex,
     awaitingInput,
     awaitingCompletion,
+    awaitingBreathing,
     isTyping,
     collectedData,
     isComplete,
     handleUserInput,
     handleInteractionComplete,
+    handleBreathingStart,
     handleBreathingComplete,
     breathingOverlay,
     reset,
