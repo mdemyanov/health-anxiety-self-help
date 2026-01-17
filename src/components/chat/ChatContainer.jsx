@@ -74,7 +74,8 @@ export default function ChatContainer({
             items={message.options?.items || []}
             title={message.options?.title}
             color={message.options?.color}
-            onComplete={() => onInteractionComplete?.(true)}
+            showContinueButton={message.options?.showContinueButton}
+            onComplete={(selectedItems) => onInteractionComplete?.(selectedItems)}
           />
         );
 

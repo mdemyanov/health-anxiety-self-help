@@ -8,16 +8,30 @@ export default function ChatChecklist({
   secondaryItems,
   secondaryTitle,
   secondaryColor = 'var(--apple-red)',
-  onComplete
+  onComplete,
+  showContinueButton = false,
 }) {
   const [checked, setChecked] = useState({});
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const handleCheck = (key) => {
+    if (isCompleted) return;
     navigator.vibrate?.(20);
     setChecked((prev) => ({
       ...prev,
       [key]: !prev[key],
     }));
+  };
+
+  const handleContinue = () => {
+    if (isCompleted) return;
+    setIsCompleted(true);
+    navigator.vibrate?.(30);
+
+    // Collect selected items from primary list
+    const selectedItems = items.filter((_, i) => checked[i.toString()]);
+
+    onComplete?.(selectedItems);
   };
 
   const renderList = (listItems, listTitle, listColor, prefix = '') => (
@@ -67,6 +81,20 @@ export default function ChatChecklist({
         <div className="relative z-10">
           {renderList(items, title, color)}
           {secondaryItems && renderList(secondaryItems, secondaryTitle, secondaryColor, 'secondary-')}
+
+          {showContinueButton && !isCompleted && (
+            <motion.button
+              className="mt-4 w-full py-3 rounded-xl font-medium transition-colors"
+              style={{
+                background: 'var(--apple-blue)',
+                color: 'white',
+              }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleContinue}
+            >
+              Продолжить
+            </motion.button>
+          )}
         </div>
       </div>
     </div>

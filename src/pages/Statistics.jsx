@@ -62,15 +62,19 @@ export default function Statistics() {
 
   // Топ когнитивных искажений
   const getDistortionStats = () => {
-    const counts = new Array(10).fill(0);
+    const counts = {};
 
-    // Искажения не сохраняются напрямую в abcEntries в текущей реализации
-    // Но можно добавить эту логику в будущем
-    // Пока показываем placeholder
+    abcData.forEach((entry) => {
+      (entry.distortions || []).forEach((d) => {
+        // Извлекаем только название искажения (до тире)
+        const label = d.split(' — ')[0];
+        counts[label] = (counts[label] || 0) + 1;
+      });
+    });
 
-    return DISTORTION_LABELS.map((label, i) => ({
+    return DISTORTION_LABELS.map((label) => ({
       label,
-      count: counts[i],
+      count: counts[label] || 0,
     })).sort((a, b) => b.count - a.count);
   };
 
@@ -114,10 +118,13 @@ export default function Statistics() {
 
   const mood30Data = getMood30DaysData();
   const anxietyStats = getAnxietyStats();
+  const distortionStats = getDistortionStats();
   const trend = getMoodTrend();
   const streak = getStreak();
 
   const hasData = moodData.length > 0 || abcData.length > 0;
+  const hasDistortionData = distortionStats.some((d) => d.count > 0);
+  const maxDistortionCount = Math.max(...distortionStats.map((d) => d.count), 1);
 
   return (
     <div className="min-h-screen">
@@ -304,26 +311,47 @@ export default function Statistics() {
               </Card>
             )}
 
-            {/* Когнитивные искажения (placeholder) */}
+            {/* Когнитивные искажения */}
             <Card className="p-4">
               <p className="headline mb-2">Когнитивные искажения</p>
-              <p className="secondary-text text-sm mb-4">
-                Отслеживание частых паттернов мышления появится в следующем обновлении.
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {DISTORTION_LABELS.slice(0, 5).map((label) => (
-                  <span
-                    key={label}
-                    className="px-3 py-1 rounded-full text-xs"
-                    style={{
-                      background: 'var(--card-secondary)',
-                      color: 'var(--label-secondary)',
-                    }}
-                  >
-                    {label}
-                  </span>
-                ))}
-              </div>
+              {!hasDistortionData ? (
+                <p className="secondary-text text-sm">
+                  Заполни ABC-дневник и отметь искажения, чтобы увидеть паттерны мышления.
+                </p>
+              ) : (
+                <>
+                  <p className="secondary-text text-sm mb-4">
+                    Частые паттерны мышления (топ-5)
+                  </p>
+                  <div className="space-y-3">
+                    {distortionStats.slice(0, 5).filter((d) => d.count > 0).map((d) => (
+                      <div key={d.label}>
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm">{d.label}</span>
+                          <span
+                            className="text-sm font-medium"
+                            style={{ color: 'var(--apple-orange)' }}
+                          >
+                            {d.count}
+                          </span>
+                        </div>
+                        <div
+                          className="h-2 rounded-full overflow-hidden"
+                          style={{ background: 'var(--card-secondary)' }}
+                        >
+                          <div
+                            className="h-full rounded-full transition-all"
+                            style={{
+                              width: `${(d.count / maxDistortionCount) * 100}%`,
+                              background: 'var(--apple-orange)',
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
             </Card>
           </>
         )}

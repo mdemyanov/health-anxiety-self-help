@@ -91,8 +91,11 @@ export const abcFlow = {
               'Долженствования — "я должен", "они должны"',
               'Навешивание ярлыков — "я неудачник"',
             ],
+            showContinueButton: true,
           },
           delay: 1500,
+          awaitCompletion: true,
+          saveAs: 'distortions',
         },
       ],
     },
@@ -178,6 +181,7 @@ export const abcFlow = {
           C: data.C,
           D: data.D,
           E: data.E,
+          distortions: data.distortions || [],
         });
         localStorage.setItem('abc-entries', JSON.stringify(entries));
       },
