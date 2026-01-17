@@ -24,6 +24,8 @@ export default function ChatTool({ flowId }) {
     title,
     currentStepIndex,
     totalSteps,
+    goBack,
+    canGoBack,
   } = useChatFlow(flowConfig);
 
   const handleBack = () => {
@@ -60,6 +62,8 @@ export default function ChatTool({ flowId }) {
       onBreathingComplete={handleBreathingComplete}
       currentStepIndex={currentStepIndex}
       totalSteps={totalSteps}
+      canGoBack={canGoBack}
+      onGoBack={goBack}
     />
   );
 }

@@ -23,6 +23,21 @@ export default function Stoic() {
           </div>
         </section>
 
+        {/* Techniques */}
+        <section>
+          <p className="secondary-text mb-3">Техники</p>
+          <div className="space-y-3">
+            <ActionCard to="/tools/decision">
+              <p className="headline">🎯 Принятие решений</p>
+              <p className="secondary-text text-sm">Стоический подход к выбору</p>
+            </ActionCard>
+            <ActionCard to="/stoic/view-from-above">
+              <p className="headline">🌍 Взгляд сверху</p>
+              <p className="secondary-text text-sm">Космическая перспектива</p>
+            </ActionCard>
+          </div>
+        </section>
+
         {/* Wisdom */}
         <section>
           <p className="secondary-text mb-3">Мудрость</p>
@@ -30,10 +45,6 @@ export default function Stoic() {
             <ActionCard to="/stoic/quotes">
               <p className="headline">📖 Цитаты стоиков</p>
               <p className="secondary-text text-sm">{quotes.length} цитат</p>
-            </ActionCard>
-            <ActionCard to="/stoic/view-from-above">
-              <p className="headline">🌍 Взгляд сверху</p>
-              <p className="secondary-text text-sm">Космическая перспектива</p>
             </ActionCard>
           </div>
         </section>

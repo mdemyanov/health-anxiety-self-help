@@ -30,6 +30,8 @@ export default function ChatContainer({
   onBreathingComplete,
   currentStepIndex = 0,
   totalSteps = 0,
+  canGoBack = false,
+  onGoBack,
 }) {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
@@ -47,6 +49,10 @@ export default function ChatContainer({
       navigate(-1);
     }
   };
+
+  // Find last user message index for "Edit" button
+  const lastUserMessageIndex = messages.reduce((lastIdx, msg, idx) =>
+    msg.sender === 'user' ? idx : lastIdx, -1);
 
   const renderMessageContent = (message) => {
     switch (message.type) {
@@ -158,10 +164,26 @@ export default function ChatContainer({
       >
         <div className="flex flex-col gap-3">
           <AnimatePresence mode="popLayout">
-            {messages.map((message) => (
-              <ChatMessage key={message.id} message={message}>
-                {renderMessageContent(message)}
-              </ChatMessage>
+            {messages.map((message, index) => (
+              <div key={message.id}>
+                <ChatMessage message={message}>
+                  {renderMessageContent(message)}
+                </ChatMessage>
+                {/* "Edit" button for last user message */}
+                {message.sender === 'user' &&
+                 index === lastUserMessageIndex &&
+                 canGoBack &&
+                 !awaitingBreathing &&
+                 !awaitingTimer && (
+                  <button
+                    onClick={onGoBack}
+                    className="mt-1 ml-auto block px-3 py-1 text-xs rounded-full transition-opacity active:opacity-70"
+                    style={{ background: 'var(--glass-bg-button)', color: 'var(--label-secondary)' }}
+                  >
+                    Изменить
+                  </button>
+                )}
+              </div>
             ))}
           </AnimatePresence>
 

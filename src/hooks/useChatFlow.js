@@ -30,6 +30,7 @@ export function useChatFlow(flowConfig) {
   const [breathingOverlay, setBreathingOverlay] = useState(null);
   const [awaitingBreathing, setAwaitingBreathing] = useState(null);
   const [awaitingTimer, setAwaitingTimer] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const timeoutRef = useRef(null);
   const typingTimeoutRef = useRef(null);
@@ -173,6 +174,16 @@ export function useChatFlow(flowConfig) {
   const handleUserInput = useCallback((value) => {
     if (!awaitingInput) return;
 
+    // Save state to history before changing (for goBack functionality)
+    setHistory(prev => [...prev, {
+      messages: [...messages],
+      currentStepIndex,
+      currentMessageIndex,
+      collectedData: { ...collectedData },
+      awaitingInput,
+      repeatedInputState,
+    }]);
+
     // Add user message
     addMessage({
       type: 'user-text',
@@ -221,7 +232,7 @@ export function useChatFlow(flowConfig) {
 
     setAwaitingInput(null);
     setCurrentMessageIndex((prev) => prev + 1);
-  }, [awaitingInput, repeatedInputState, addMessage]);
+  }, [awaitingInput, repeatedInputState, addMessage, messages, currentStepIndex, currentMessageIndex, collectedData]);
 
   // Handle interaction completion (timer, slider, etc.)
   const handleInteractionComplete = useCallback((value) => {
@@ -292,6 +303,26 @@ export function useChatFlow(flowConfig) {
     };
   }, [currentMessageIndex, currentStepIndex, awaitingInput, awaitingCompletion, processNextMessage]);
 
+  // Go back to previous state (undo last user input)
+  const goBack = useCallback(() => {
+    if (history.length === 0) return;
+
+    const prev = history[history.length - 1];
+
+    setMessages(prev.messages);
+    setCurrentStepIndex(prev.currentStepIndex);
+    setCurrentMessageIndex(prev.currentMessageIndex);
+    setCollectedData(prev.collectedData);
+    setAwaitingInput(prev.awaitingInput);
+    setRepeatedInputState(prev.repeatedInputState || null);
+
+    setHistory(h => h.slice(0, -1));
+    navigator.vibrate?.(20);
+  }, [history]);
+
+  // Computed: can go back?
+  const canGoBack = history.length > 0 && !isComplete;
+
   // Reset flow
   const reset = useCallback(() => {
     setMessages([]);
@@ -306,6 +337,7 @@ export function useChatFlow(flowConfig) {
     setBreathingOverlay(null);
     setAwaitingBreathing(null);
     setAwaitingTimer(null);
+    setHistory([]);
   }, []);
 
   return {
@@ -327,6 +359,8 @@ export function useChatFlow(flowConfig) {
     handleTimerComplete,
     breathingOverlay,
     reset,
+    goBack,
+    canGoBack,
     title: flowConfig?.title,
   };
 }

@@ -11,6 +11,8 @@ import { doubleStandardFlow } from './doubleStandardFlow';
 import { tripleColumnFlow } from './tripleColumnFlow';
 import { factsVsFeelingsFlow } from './factsVsFeelingsFlow';
 import { shouldStatementsFlow } from './shouldStatementsFlow';
+import { impostorSyndromeFlow } from './impostorSyndromeFlow';
+import { decisionFlow } from './decisionFlow';
 
 export {
   abcFlow,
@@ -26,6 +28,8 @@ export {
   tripleColumnFlow,
   factsVsFeelingsFlow,
   shouldStatementsFlow,
+  impostorSyndromeFlow,
+  decisionFlow,
 };
 
 // Flow map for easy access by ID
@@ -43,6 +47,8 @@ export const flowsById = {
   'triple-column': tripleColumnFlow,
   'facts-vs-feelings': factsVsFeelingsFlow,
   'should-statements': shouldStatementsFlow,
+  'impostor-syndrome': impostorSyndromeFlow,
+  'decision': decisionFlow,
 };
 
 export function getFlowById(id) {

@@ -1,6 +1,8 @@
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { TabBar } from './components/layout';
+import Onboarding from './components/Onboarding';
 
 // Pages
 import Home from './pages/Home';
@@ -16,8 +18,29 @@ import { Quotes } from './pages/stoic/index';
 import { MoodTracker } from './pages/diary/index';
 
 function App() {
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if user has completed onboarding
+    const profile = localStorage.getItem('user-profile');
+    setShowOnboarding(!profile);
+    setIsLoading(false);
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    setShowOnboarding(false);
+  };
+
+  if (isLoading) {
+    return null;
+  }
+
   return (
     <ThemeProvider>
+      {showOnboarding && (
+        <Onboarding onComplete={handleOnboardingComplete} />
+      )}
       <BrowserRouter>
         <div className="min-h-screen" style={{ background: 'var(--background)' }}>
           <Routes>
@@ -37,6 +60,8 @@ function App() {
             <Route path="/tools/triple-column" element={<ChatTool flowId="triple-column" />} />
             <Route path="/tools/facts-vs-feelings" element={<ChatTool flowId="facts-vs-feelings" />} />
             <Route path="/tools/should-statements" element={<ChatTool flowId="should-statements" />} />
+            <Route path="/tools/impostor-syndrome" element={<ChatTool flowId="impostor-syndrome" />} />
+            <Route path="/tools/decision" element={<ChatTool flowId="decision" />} />
 
             {/* Non-chat tools (breathing stays as is) */}
             <Route path="/tools/breathing" element={<BoxBreathing />} />

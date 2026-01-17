@@ -13,6 +13,8 @@ import {
   tripleColumnFlow,
   factsVsFeelingsFlow,
   shouldStatementsFlow,
+  impostorSyndromeFlow,
+  decisionFlow,
   flowsById,
   getFlowById,
 } from '../index';
@@ -32,6 +34,8 @@ const allFlows = [
   tripleColumnFlow,
   factsVsFeelingsFlow,
   shouldStatementsFlow,
+  impostorSyndromeFlow,
+  decisionFlow,
 ];
 
 // Flow names for readable test output
@@ -49,6 +53,8 @@ const flowNames = [
   'tripleColumnFlow',
   'factsVsFeelingsFlow',
   'shouldStatementsFlow',
+  'impostorSyndromeFlow',
+  'decisionFlow',
 ];
 
 describe('Flow Schema Validation', () => {
@@ -122,15 +128,15 @@ describe('Flow Schema Validation', () => {
       expect(uniqueIds.size).toBe(allIds.length);
     });
 
-    it('should have 13 flows total', () => {
-      expect(allFlows).toHaveLength(13);
+    it('should have 15 flows total', () => {
+      expect(allFlows).toHaveLength(15);
     });
   });
 });
 
 describe('flowsById', () => {
-  it('should contain all 13 flows', () => {
-    expect(Object.keys(flowsById)).toHaveLength(13);
+  it('should contain all 15 flows', () => {
+    expect(Object.keys(flowsById)).toHaveLength(15);
   });
 
   it('should have correct mappings', () => {
@@ -147,6 +153,8 @@ describe('flowsById', () => {
     expect(flowsById['triple-column']).toBe(tripleColumnFlow);
     expect(flowsById['facts-vs-feelings']).toBe(factsVsFeelingsFlow);
     expect(flowsById['should-statements']).toBe(shouldStatementsFlow);
+    expect(flowsById['impostor-syndrome']).toBe(impostorSyndromeFlow);
+    expect(flowsById['decision']).toBe(decisionFlow);
   });
 
   it('should have IDs that match flow.id property', () => {

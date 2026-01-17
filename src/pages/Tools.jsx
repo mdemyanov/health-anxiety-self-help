@@ -50,6 +50,10 @@ export default function Tools() {
               <p className="headline">🤝 Двойной стандарт</p>
               <p className="secondary-text text-sm">Что бы ты сказал другу?</p>
             </ActionCard>
+            <ActionCard to="/tools/impostor-syndrome">
+              <p className="headline">🎭 Синдром самозванца</p>
+              <p className="secondary-text text-sm">Работа с чувством некомпетентности</p>
+            </ActionCard>
             <ActionCard to="/tools/should-statements">
               <p className="headline">🎯 Работа с "должен"</p>
               <p className="secondary-text text-sm">Трансформация долженствований</p>

@@ -163,4 +163,6 @@ export const TOOL_NAMES = {
   'morning': 'Утренняя практика',
   'evening': 'Вечерняя рефлексия',
   'view-from-above': 'Взгляд сверху',
+  'impostor-syndrome': 'Синдром самозванца',
+  'decision': 'Принятие решений',
 };
