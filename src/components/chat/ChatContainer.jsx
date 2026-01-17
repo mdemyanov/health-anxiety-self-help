@@ -5,12 +5,12 @@ import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import ChatTypingIndicator from './ChatTypingIndicator';
 import ChatTimer from './messages/ChatTimer';
-import ChatBreathing from './messages/ChatBreathing';
 import ChatSlider from './messages/ChatSlider';
 import ChatChecklist from './messages/ChatChecklist';
 import ChatQuote from './messages/ChatQuote';
 import ChatMultiInput from './messages/ChatMultiInput';
 import ChatComparison from './messages/ChatComparison';
+import BreathingOverlay from './overlays/BreathingOverlay';
 
 export default function ChatContainer({
   title,
@@ -20,7 +20,9 @@ export default function ChatContainer({
   onUserInput,
   onInteractionComplete,
   onBack,
-  collectedData
+  collectedData,
+  breathingOverlay,
+  onBreathingComplete
 }) {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
@@ -46,15 +48,6 @@ export default function ChatContainer({
           <ChatTimer
             duration={message.options?.duration || 10}
             autoStart={message.options?.autoStart}
-            onComplete={() => onInteractionComplete?.(true)}
-          />
-        );
-
-      case 'breathing':
-        return (
-          <ChatBreathing
-            pattern={message.options?.pattern || '4-4'}
-            cycles={message.options?.cycles || 3}
             onComplete={() => onInteractionComplete?.(true)}
           />
         );
@@ -164,6 +157,14 @@ export default function ChatContainer({
           />
         </div>
       )}
+
+      {/* Breathing Overlay */}
+      <BreathingOverlay
+        isOpen={!!breathingOverlay}
+        pattern={breathingOverlay?.pattern}
+        cycles={breathingOverlay?.cycles}
+        onComplete={onBreathingComplete}
+      />
     </div>
   );
 }

@@ -13,6 +13,8 @@ export default function ChatTool({ flowId }) {
     isTyping,
     handleUserInput,
     handleInteractionComplete,
+    handleBreathingComplete,
+    breathingOverlay,
     collectedData,
     isComplete,
     title,
@@ -44,6 +46,8 @@ export default function ChatTool({ flowId }) {
       onInteractionComplete={handleInteractionComplete}
       onBack={handleBack}
       collectedData={collectedData}
+      breathingOverlay={breathingOverlay}
+      onBreathingComplete={handleBreathingComplete}
     />
   );
 }

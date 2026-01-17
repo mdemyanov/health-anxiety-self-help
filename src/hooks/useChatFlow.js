@@ -26,6 +26,7 @@ export function useChatFlow(flowConfig) {
   const [isTyping, setIsTyping] = useState(false);
   const [collectedData, setCollectedData] = useState({});
   const [isComplete, setIsComplete] = useState(false);
+  const [breathingOverlay, setBreathingOverlay] = useState(null);
 
   const timeoutRef = useRef(null);
   const typingTimeoutRef = useRef(null);
@@ -95,6 +96,21 @@ export function useChatFlow(flowConfig) {
     // Add message after delay
     timeoutRef.current = setTimeout(() => {
       setIsTyping(false);
+
+      // Handle breathing type - open overlay instead of adding message
+      if (msgConfig.type === 'breathing') {
+        setBreathingOverlay({
+          pattern: msgConfig.options?.pattern || '4-4',
+          cycles: msgConfig.options?.cycles || 3,
+        });
+        if (msgConfig.awaitCompletion) {
+          setAwaitingCompletion({
+            type: 'breathing',
+            saveAs: msgConfig.saveAs,
+          });
+        }
+        return;
+      }
 
       const sender = msgConfig.type?.startsWith('therapist') ? 'therapist'
         : msgConfig.type === 'system' ? 'system'
@@ -208,6 +224,13 @@ export function useChatFlow(flowConfig) {
     setCurrentMessageIndex((prev) => prev + 1);
   }, [awaitingCompletion]);
 
+  // Handle breathing overlay completion
+  const handleBreathingComplete = useCallback(() => {
+    setBreathingOverlay(null);
+    setAwaitingCompletion(null);
+    setCurrentMessageIndex((prev) => prev + 1);
+  }, []);
+
   // Process messages when step/message index changes
   useEffect(() => {
     // Clear any pending timeouts
@@ -244,6 +267,7 @@ export function useChatFlow(flowConfig) {
     setIsTyping(false);
     setCollectedData({});
     setIsComplete(false);
+    setBreathingOverlay(null);
   }, []);
 
   return {
@@ -257,6 +281,8 @@ export function useChatFlow(flowConfig) {
     isComplete,
     handleUserInput,
     handleInteractionComplete,
+    handleBreathingComplete,
+    breathingOverlay,
     reset,
     title: flowConfig?.title,
   };
