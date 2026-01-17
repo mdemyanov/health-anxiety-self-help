@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { logToolUsage } from '../utils/analytics';
 
 // Russian pluralization helper
 const pluralize = (count, one, few, many) => {
@@ -76,6 +77,12 @@ export function useChatFlow(flowConfig) {
       } else {
         // Flow complete
         setIsComplete(true);
+
+        // Log tool usage
+        if (flowConfig?.id) {
+          logToolUsage(flowConfig.id, true);
+        }
+
         if (flowConfig.onComplete) {
           flowConfig.onComplete(collectedData);
         }
@@ -305,6 +312,7 @@ export function useChatFlow(flowConfig) {
     messages,
     currentStep,
     currentStepIndex,
+    totalSteps: flowConfig?.steps?.length || 0,
     awaitingInput,
     awaitingCompletion,
     awaitingBreathing,

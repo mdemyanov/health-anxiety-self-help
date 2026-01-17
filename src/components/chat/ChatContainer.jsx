@@ -27,7 +27,9 @@ export default function ChatContainer({
   collectedData,
   breathingOverlay,
   onBreathingStart,
-  onBreathingComplete
+  onBreathingComplete,
+  currentStepIndex = 0,
+  totalSteps = 0,
 }) {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
@@ -129,7 +131,24 @@ export default function ChatContainer({
             </svg>
           </button>
           <h1 className="relative z-10 headline flex-1">{title}</h1>
+          {totalSteps > 1 && (
+            <span className="relative z-10 text-sm" style={{ color: 'var(--label-secondary)' }}>
+              {currentStepIndex + 1}/{totalSteps}
+            </span>
+          )}
         </div>
+        {/* Progress bar */}
+        {totalSteps > 1 && (
+          <div className="mt-1.5 mx-1 h-1 rounded-full overflow-hidden" style={{ background: 'var(--separator)' }}>
+            <div
+              className="h-full rounded-full transition-all duration-300"
+              style={{
+                width: `${((currentStepIndex + 1) / totalSteps) * 100}%`,
+                background: 'var(--apple-blue)',
+              }}
+            />
+          </div>
+        )}
       </div>
 
       {/* Messages */}

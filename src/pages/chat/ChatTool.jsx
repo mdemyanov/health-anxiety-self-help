@@ -22,6 +22,8 @@ export default function ChatTool({ flowId }) {
     collectedData,
     isComplete,
     title,
+    currentStepIndex,
+    totalSteps,
   } = useChatFlow(flowConfig);
 
   const handleBack = () => {
@@ -56,6 +58,8 @@ export default function ChatTool({ flowId }) {
       breathingOverlay={breathingOverlay}
       onBreathingStart={handleBreathingStart}
       onBreathingComplete={handleBreathingComplete}
+      currentStepIndex={currentStepIndex}
+      totalSteps={totalSteps}
     />
   );
 }

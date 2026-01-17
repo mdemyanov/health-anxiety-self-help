@@ -70,7 +70,7 @@ export const dichotomyFlow = {
           content: 'Что тебя беспокоит сейчас?',
           delay: 500,
           awaitInput: true,
-          inputPlaceholder: 'Меня беспокоит...',
+          inputPlaceholder: 'Например: результаты квартала, решение инвестора, здоровье, отношения в команде...',
           saveAs: 'worry',
           multiline: true,
         },

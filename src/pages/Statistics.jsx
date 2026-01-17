@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../components/ui';
+import { getToolStats, TOOL_NAMES } from '../utils/analytics';
 
 const DISTORTION_LABELS = [
   'Чёрно-белое мышление',
@@ -15,16 +16,20 @@ const DISTORTION_LABELS = [
   'Навешивание ярлыков',
 ];
 
+const DAY_NAMES = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+
 export default function Statistics() {
   const navigate = useNavigate();
   const [moodData, setMoodData] = useState([]);
   const [abcData, setAbcData] = useState([]);
+  const [toolStats, setToolStats] = useState(null);
 
   useEffect(() => {
     const moodEntries = JSON.parse(localStorage.getItem('mood-entries') || '[]');
     const abcEntries = JSON.parse(localStorage.getItem('abc-entries') || '[]');
     setMoodData(moodEntries);
     setAbcData(abcEntries);
+    setToolStats(getToolStats(30));
   }, []);
 
   // Статистика настроения за 30 дней
@@ -353,6 +358,77 @@ export default function Statistics() {
                 </>
               )}
             </Card>
+
+            {/* Использование техник */}
+            {toolStats && toolStats.totalUsage > 0 && (
+              <Card className="p-4">
+                <p className="headline mb-2">Использование техник</p>
+                <p className="secondary-text text-sm mb-4">
+                  {toolStats.totalUsage} практик за 30 дней ({toolStats.completedUsage} завершённых)
+                </p>
+                <div className="space-y-3">
+                  {Object.entries(toolStats.usageByTool)
+                    .sort((a, b) => b[1].total - a[1].total)
+                    .slice(0, 5)
+                    .map(([toolId, data]) => {
+                      const maxUsage = Math.max(...Object.values(toolStats.usageByTool).map(d => d.total), 1);
+                      return (
+                        <div key={toolId}>
+                          <div className="flex justify-between mb-1">
+                            <span className="text-sm">{TOOL_NAMES[toolId] || toolId}</span>
+                            <span
+                              className="text-sm font-medium"
+                              style={{ color: 'var(--apple-blue)' }}
+                            >
+                              {data.total}
+                            </span>
+                          </div>
+                          <div
+                            className="h-2 rounded-full overflow-hidden"
+                            style={{ background: 'var(--card-secondary)' }}
+                          >
+                            <div
+                              className="h-full rounded-full transition-all"
+                              style={{
+                                width: `${(data.total / maxUsage) * 100}%`,
+                                background: 'var(--apple-blue)',
+                              }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </Card>
+            )}
+
+            {/* Активность по дням недели */}
+            {toolStats && toolStats.totalUsage > 0 && (
+              <Card className="p-4">
+                <p className="headline mb-4">Активность по дням</p>
+                <div className="flex items-end justify-between gap-2 h-24">
+                  {toolStats.usageByDayOfWeek.map((count, dayIndex) => {
+                    const maxCount = Math.max(...toolStats.usageByDayOfWeek, 1);
+                    const height = count > 0 ? Math.max((count / maxCount) * 100, 8) : 4;
+                    return (
+                      <div key={dayIndex} className="flex-1 flex flex-col items-center gap-1">
+                        <div
+                          className="w-full rounded-t-sm transition-all"
+                          style={{
+                            height: `${height}%`,
+                            background: count > 0 ? 'var(--apple-green)' : 'var(--separator)',
+                            opacity: count > 0 ? 0.7 : 0.3,
+                          }}
+                        />
+                        <span className="text-xs" style={{ color: 'var(--label-secondary)' }}>
+                          {DAY_NAMES[dayIndex]}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Card>
+            )}
           </>
         )}
       </main>
