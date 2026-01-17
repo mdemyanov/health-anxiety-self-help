@@ -18,8 +18,8 @@ export default function Home() {
 
       <main className="px-4 space-y-6">
         {/* SOS Button - prominent at top */}
-        <Link to="/sos" onClick={handleSosClick} className="block">
-          <div className="sos-card p-5 flex items-center gap-4 rounded-[22px] active:scale-[0.98] transition-transform">
+        <div className="sos-card p-5 rounded-[22px]">
+          <div className="flex items-center gap-4 mb-4">
             <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center">
               <span className="text-3xl">🫂</span>
             </div>
@@ -27,9 +27,24 @@ export default function Home() {
               <p className="text-white font-bold text-lg">SOS-помощь</p>
               <p className="text-white/80 text-sm">Тревога или паника? Начни здесь</p>
             </div>
-            <span className="text-white/60 text-2xl">→</span>
           </div>
-        </Link>
+          <div className="flex gap-3">
+            <Link
+              to="/sos-quick"
+              onClick={handleSosClick}
+              className="flex-1 py-3 px-4 rounded-xl bg-white/20 text-white text-center font-medium active:scale-[0.98] transition-transform"
+            >
+              Быстро (2 мин)
+            </Link>
+            <Link
+              to="/sos"
+              onClick={handleSosClick}
+              className="flex-1 py-3 px-4 rounded-xl bg-white/30 text-white text-center font-medium active:scale-[0.98] transition-transform"
+            >
+              Полная (8 мин)
+            </Link>
+          </div>
+        </div>
 
         {/* Quote of the day */}
         <Card className="p-6">

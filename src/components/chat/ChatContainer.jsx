@@ -8,7 +8,9 @@ import ChatTypingIndicator from './ChatTypingIndicator';
 import ChatTimer from './messages/ChatTimer';
 import ChatSlider from './messages/ChatSlider';
 import ChatChecklist from './messages/ChatChecklist';
+import ChatChecklistWithHints from './messages/ChatChecklistWithHints';
 import ChatQuote from './messages/ChatQuote';
+import ChatQuestionPrompts from './messages/ChatQuestionPrompts';
 import ChatMultiInput from './messages/ChatMultiInput';
 import ChatComparison from './messages/ChatComparison';
 import ChatFeedback from './messages/ChatFeedback';
@@ -33,6 +35,8 @@ export default function ChatContainer({
   totalSteps = 0,
   canGoBack = false,
   onGoBack,
+  onQuestionPromptClick,
+  inputPrefill = '',
 }) {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
@@ -88,12 +92,33 @@ export default function ChatContainer({
           />
         );
 
+      case 'checklist-with-hints':
+        return (
+          <ChatChecklistWithHints
+            items={message.options?.items || []}
+            title={message.options?.title}
+            color={message.options?.color}
+            showContinueButton={message.options?.showContinueButton}
+            onComplete={(selectedItems) => onInteractionComplete?.(selectedItems)}
+          />
+        );
+
       case 'quote':
         return (
           <ChatQuote
             text={message.content}
             author={message.options?.author}
             items={message.options?.items}
+          />
+        );
+
+      case 'question-prompts':
+        return (
+          <ChatQuestionPrompts
+            questions={message.options?.questions || []}
+            title={message.options?.title}
+            color={message.options?.color}
+            onQuestionClick={onQuestionPromptClick}
           />
         );
 
@@ -210,6 +235,7 @@ export default function ChatContainer({
             placeholder={awaitingInput.placeholder || 'Напиши ответ...'}
             multiline={awaitingInput.multiline}
             statusHint={awaitingInput.statusHint}
+            prefillValue={inputPrefill}
           />
         </div>
       )}

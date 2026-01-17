@@ -22,6 +22,12 @@ export default function ChatTool({ flowId }) {
   const flowConfig = getFlowById(flowId);
   const [showDraftDialog, setShowDraftDialog] = useState(false);
   const [draftInfo, setDraftInfo] = useState(null);
+  const [inputPrefill, setInputPrefill] = useState('');
+
+  // Handler for question prompt clicks (inserts text into input)
+  const handleQuestionPromptClick = (question) => {
+    setInputPrefill(question);
+  };
 
   const {
     messages,
@@ -105,6 +111,8 @@ export default function ChatTool({ flowId }) {
         totalSteps={totalSteps}
         canGoBack={canGoBack}
         onGoBack={goBack}
+        onQuestionPromptClick={handleQuestionPromptClick}
+        inputPrefill={inputPrefill}
       />
 
       {/* Draft continuation dialog */}

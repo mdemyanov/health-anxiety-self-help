@@ -62,6 +62,10 @@ export default function Tools() {
               <p className="headline">⚖️ Дихотомия контроля</p>
               <p className="secondary-text text-sm">Что в моей власти?</p>
             </ActionCard>
+            <ActionCard to="/tools/work-life-balance">
+              <p className="headline">🏠 Баланс работа-жизнь</p>
+              <p className="secondary-text text-sm">Оценка и улучшение баланса</p>
+            </ActionCard>
           </div>
         </section>
       </main>

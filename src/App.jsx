@@ -62,6 +62,7 @@ function App() {
             <Route path="/tools/should-statements" element={<ChatTool flowId="should-statements" />} />
             <Route path="/tools/impostor-syndrome" element={<ChatTool flowId="impostor-syndrome" />} />
             <Route path="/tools/decision" element={<ChatTool flowId="decision" />} />
+            <Route path="/tools/work-life-balance" element={<ChatTool flowId="work-life-balance" />} />
 
             {/* Non-chat tools (breathing stays as is) */}
             <Route path="/tools/breathing" element={<BoxBreathing />} />
@@ -69,12 +70,15 @@ function App() {
 
             {/* Chat-based Stoic */}
             <Route path="/stoic/morning" element={<ChatTool flowId="morning" />} />
+            <Route path="/stoic/morning-quick" element={<ChatTool flowId="morning-quick" />} />
             <Route path="/stoic/evening" element={<ChatTool flowId="evening" />} />
+            <Route path="/stoic/evening-quick" element={<ChatTool flowId="evening-quick" />} />
             <Route path="/stoic/view-from-above" element={<ChatTool flowId="view-from-above" />} />
             <Route path="/stoic/quotes" element={<Quotes />} />
 
             {/* SOS - only accessible from Home */}
             <Route path="/sos" element={<ChatTool flowId="sos" />} />
+            <Route path="/sos-quick" element={<ChatTool flowId="sos-quick" />} />
 
             {/* Diary */}
             <Route path="/diary/:id" element={<AbcDetail />} />

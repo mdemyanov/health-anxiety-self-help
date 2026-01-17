@@ -7,9 +7,10 @@ export default function ChatInput({
   disabled = false,
   multiline = false,
   autoFocus = true,
-  statusHint = null
+  statusHint = null,
+  prefillValue = '',
 }) {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(prefillValue);
   const inputRef = useRef(null);
 
   // Auto-focus on mount
@@ -18,6 +19,14 @@ export default function ChatInput({
       inputRef.current.focus();
     }
   }, [autoFocus, disabled]);
+
+  // Update value when prefillValue changes
+  useEffect(() => {
+    if (prefillValue) {
+      setValue((prev) => prev ? `${prev} ${prefillValue}` : prefillValue);
+      inputRef.current?.focus();
+    }
+  }, [prefillValue]);
 
   // Auto-expand textarea based on content (Telegram-style)
   const adjustTextareaHeight = useCallback(() => {

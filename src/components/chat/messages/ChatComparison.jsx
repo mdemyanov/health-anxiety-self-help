@@ -1,4 +1,32 @@
-import { motion } from 'framer-motion';
+import { motion, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+// Компонент анимированного числа
+function AnimatedNumber({ value, delay = 0, color }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const spring = useSpring(0, { stiffness: 50, damping: 15 });
+  const display = useTransform(spring, (v) => Math.round(v));
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+      spring.set(value);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [value, delay, spring]);
+
+  return (
+    <motion.span
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.8 }}
+      transition={{ duration: 0.3 }}
+      className="text-3xl font-bold"
+      style={{ color }}
+    >
+      <motion.span>{display}</motion.span>%
+    </motion.span>
+  );
+}
 
 export default function ChatComparison({
   before,
@@ -16,6 +44,13 @@ export default function ChatComparison({
     const diff = (beforeValue || 0) - (afterValue || 0);
     const improved = diff > 0;
 
+    // Цвет "после": зелёный если снизилось, красный если выросло, фиолетовый если без изменений
+    const afterColor = diff > 0
+      ? 'var(--apple-green)'
+      : diff < 0
+        ? 'var(--apple-red)'
+        : 'var(--apple-purple)';
+
     return (
       <div className="mt-3">
         <div className="card p-4">
@@ -25,19 +60,18 @@ export default function ChatComparison({
                 <p className="text-xs mb-1" style={{ color: 'var(--label-secondary)' }}>
                   {before?.label || 'До'}
                 </p>
-                <p
-                  className="text-3xl font-bold"
-                  style={{ color: 'var(--apple-purple)' }}
-                >
-                  {beforeValue ?? 0}%
-                </p>
+                <AnimatedNumber
+                  value={beforeValue ?? 0}
+                  delay={0}
+                  color="var(--apple-purple)"
+                />
               </div>
 
               <motion.div
                 className="text-2xl"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 0.3, type: 'spring' }}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
               >
                 →
               </motion.div>
@@ -46,12 +80,11 @@ export default function ChatComparison({
                 <p className="text-xs mb-1" style={{ color: 'var(--label-secondary)' }}>
                   {after?.label || 'После'}
                 </p>
-                <p
-                  className="text-3xl font-bold"
-                  style={{ color: 'var(--apple-purple)' }}
-                >
-                  {afterValue ?? 0}%
-                </p>
+                <AnimatedNumber
+                  value={afterValue ?? 0}
+                  delay={600}
+                  color={afterColor}
+                />
               </div>
             </div>
 
@@ -61,16 +94,16 @@ export default function ChatComparison({
                 style={{
                   background: improved
                     ? 'rgba(52, 199, 89, 0.15)'
-                    : 'rgba(255, 149, 0, 0.15)',
+                    : 'rgba(255, 59, 48, 0.15)',
                 }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ delay: 1.2, duration: 0.4 }}
               >
                 <span
                   className="font-medium"
                   style={{
-                    color: improved ? 'var(--apple-green)' : 'var(--apple-orange)',
+                    color: improved ? 'var(--apple-green)' : 'var(--apple-red)',
                   }}
                 >
                   {improved ? '↓' : '↑'} Тревога {improved ? 'снизилась' : 'выросла'} на {Math.abs(diff)}%

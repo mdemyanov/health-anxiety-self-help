@@ -1,4 +1,5 @@
-import { ActionCard } from '../components/ui';
+import { Link } from 'react-router-dom';
+import { ActionCard, Card } from '../components/ui';
 import { Header } from '../components/layout';
 import { quotes } from '../data/quotes';
 
@@ -12,14 +13,56 @@ export default function Stoic() {
         <section>
           <p className="secondary-text mb-3">Ежедневные практики</p>
           <div className="space-y-3">
-            <ActionCard to="/stoic/morning">
-              <p className="headline">🌅 Утренняя практика</p>
-              <p className="secondary-text text-sm">5 минут для подготовки к дню</p>
-            </ActionCard>
-            <ActionCard to="/stoic/evening">
-              <p className="headline">🌙 Вечерняя рефлексия</p>
-              <p className="secondary-text text-sm">5 минут для обзора дня</p>
-            </ActionCard>
+            <Card className="p-4">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">🌅</span>
+                <div>
+                  <p className="headline">Утренняя практика</p>
+                  <p className="secondary-text text-sm">Подготовка к дню</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Link
+                  to="/stoic/morning-quick"
+                  className="flex-1 py-2.5 px-3 rounded-xl text-center text-sm font-medium active:scale-[0.98] transition-transform"
+                  style={{ background: 'var(--glass-bg)', color: 'var(--label)' }}
+                >
+                  Быстро (2 мин)
+                </Link>
+                <Link
+                  to="/stoic/morning"
+                  className="flex-1 py-2.5 px-3 rounded-xl text-center text-sm font-medium active:scale-[0.98] transition-transform"
+                  style={{ background: 'var(--apple-blue)', color: 'white' }}
+                >
+                  Полная (5 мин)
+                </Link>
+              </div>
+            </Card>
+            <Card className="p-4">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">🌙</span>
+                <div>
+                  <p className="headline">Вечерняя рефлексия</p>
+                  <p className="secondary-text text-sm">Обзор дня</p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Link
+                  to="/stoic/evening-quick"
+                  className="flex-1 py-2.5 px-3 rounded-xl text-center text-sm font-medium active:scale-[0.98] transition-transform"
+                  style={{ background: 'var(--glass-bg)', color: 'var(--label)' }}
+                >
+                  Быстро (2 мин)
+                </Link>
+                <Link
+                  to="/stoic/evening"
+                  className="flex-1 py-2.5 px-3 rounded-xl text-center text-sm font-medium active:scale-[0.98] transition-transform"
+                  style={{ background: 'var(--apple-blue)', color: 'white' }}
+                >
+                  Полная (5 мин)
+                </Link>
+              </div>
+            </Card>
           </div>
         </section>
 

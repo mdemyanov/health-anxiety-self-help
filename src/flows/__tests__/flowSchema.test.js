@@ -2,12 +2,15 @@ import { describe, it, expect } from 'vitest';
 import {
   abcFlow,
   sosFlow,
+  sosQuickFlow,
   stopPauseFlow,
   groundingFlow,
   decatastrophizeFlow,
   dichotomyFlow,
   morningFlow,
+  morningQuickFlow,
   eveningFlow,
+  eveningQuickFlow,
   viewFromAboveFlow,
   doubleStandardFlow,
   tripleColumnFlow,
@@ -15,6 +18,7 @@ import {
   shouldStatementsFlow,
   impostorSyndromeFlow,
   decisionFlow,
+  workLifeBalanceFlow,
   flowsById,
   getFlowById,
 } from '../index';
@@ -23,12 +27,15 @@ import {
 const allFlows = [
   abcFlow,
   sosFlow,
+  sosQuickFlow,
   stopPauseFlow,
   groundingFlow,
   decatastrophizeFlow,
   dichotomyFlow,
   morningFlow,
+  morningQuickFlow,
   eveningFlow,
+  eveningQuickFlow,
   viewFromAboveFlow,
   doubleStandardFlow,
   tripleColumnFlow,
@@ -36,18 +43,22 @@ const allFlows = [
   shouldStatementsFlow,
   impostorSyndromeFlow,
   decisionFlow,
+  workLifeBalanceFlow,
 ];
 
 // Flow names for readable test output
 const flowNames = [
   'abcFlow',
   'sosFlow',
+  'sosQuickFlow',
   'stopPauseFlow',
   'groundingFlow',
   'decatastrophizeFlow',
   'dichotomyFlow',
   'morningFlow',
+  'morningQuickFlow',
   'eveningFlow',
+  'eveningQuickFlow',
   'viewFromAboveFlow',
   'doubleStandardFlow',
   'tripleColumnFlow',
@@ -55,6 +66,7 @@ const flowNames = [
   'shouldStatementsFlow',
   'impostorSyndromeFlow',
   'decisionFlow',
+  'workLifeBalanceFlow',
 ];
 
 describe('Flow Schema Validation', () => {
@@ -128,26 +140,29 @@ describe('Flow Schema Validation', () => {
       expect(uniqueIds.size).toBe(allIds.length);
     });
 
-    it('should have 15 flows total', () => {
-      expect(allFlows).toHaveLength(15);
+    it('should have 19 flows total', () => {
+      expect(allFlows).toHaveLength(19);
     });
   });
 });
 
 describe('flowsById', () => {
-  it('should contain all 15 flows', () => {
-    expect(Object.keys(flowsById)).toHaveLength(15);
+  it('should contain all 19 flows', () => {
+    expect(Object.keys(flowsById)).toHaveLength(19);
   });
 
   it('should have correct mappings', () => {
     expect(flowsById['abc-diary']).toBe(abcFlow);
     expect(flowsById['sos']).toBe(sosFlow);
+    expect(flowsById['sos-quick']).toBe(sosQuickFlow);
     expect(flowsById['stop-pause']).toBe(stopPauseFlow);
     expect(flowsById['grounding']).toBe(groundingFlow);
     expect(flowsById['decatastrophize']).toBe(decatastrophizeFlow);
     expect(flowsById['dichotomy']).toBe(dichotomyFlow);
     expect(flowsById['morning']).toBe(morningFlow);
+    expect(flowsById['morning-quick']).toBe(morningQuickFlow);
     expect(flowsById['evening']).toBe(eveningFlow);
+    expect(flowsById['evening-quick']).toBe(eveningQuickFlow);
     expect(flowsById['view-from-above']).toBe(viewFromAboveFlow);
     expect(flowsById['double-standard']).toBe(doubleStandardFlow);
     expect(flowsById['triple-column']).toBe(tripleColumnFlow);
@@ -155,6 +170,7 @@ describe('flowsById', () => {
     expect(flowsById['should-statements']).toBe(shouldStatementsFlow);
     expect(flowsById['impostor-syndrome']).toBe(impostorSyndromeFlow);
     expect(flowsById['decision']).toBe(decisionFlow);
+    expect(flowsById['work-life-balance']).toBe(workLifeBalanceFlow);
   });
 
   it('should have IDs that match flow.id property', () => {
@@ -169,6 +185,7 @@ describe('getFlowById', () => {
     expect(getFlowById('abc-diary')).toBe(abcFlow);
     expect(getFlowById('sos')).toBe(sosFlow);
     expect(getFlowById('morning')).toBe(morningFlow);
+    expect(getFlowById('work-life-balance')).toBe(workLifeBalanceFlow);
   });
 
   it('should return null for invalid ID', () => {
@@ -192,6 +209,19 @@ describe('specific flow validations', () => {
 
     it('should have breathing exercise step', () => {
       const hasBreathing = sosFlow.steps.some((step) =>
+        step.messages.some((msg) => msg.type === 'breathing')
+      );
+      expect(hasBreathing).toBe(true);
+    });
+  });
+
+  describe('sosQuickFlow', () => {
+    it('should have quick SOS properties', () => {
+      expect(sosQuickFlow.id).toBe('sos-quick');
+    });
+
+    it('should have breathing exercise step', () => {
+      const hasBreathing = sosQuickFlow.steps.some((step) =>
         step.messages.some((msg) => msg.type === 'breathing')
       );
       expect(hasBreathing).toBe(true);
@@ -235,6 +265,13 @@ describe('specific flow validations', () => {
     it('should have evening reflection properties', () => {
       expect(eveningFlow.id).toBe('evening');
       expect(eveningFlow.title.toLowerCase()).toContain('вечер');
+    });
+  });
+
+  describe('workLifeBalanceFlow', () => {
+    it('should have work-life balance properties', () => {
+      expect(workLifeBalanceFlow.id).toBe('work-life-balance');
+      expect(workLifeBalanceFlow.title.toLowerCase()).toContain('баланс');
     });
   });
 });
