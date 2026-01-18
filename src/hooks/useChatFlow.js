@@ -37,6 +37,7 @@ export function useChatFlow(flowConfig) {
 
   const timeoutRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const processNextMessageRef = useRef(null);
 
   const currentStep = flowConfig?.steps?.[currentStepIndex];
 
@@ -63,6 +64,16 @@ export function useChatFlow(flowConfig) {
 
   // Process next message in current step
   const processNextMessage = useCallback(() => {
+    // Clear any existing timeouts to prevent duplicates
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    if (typingTimeoutRef.current) {
+      clearTimeout(typingTimeoutRef.current);
+      typingTimeoutRef.current = null;
+    }
+
     if (!currentStep || isComplete) return;
 
     const stepMessages = currentStep.messages || [];
@@ -178,6 +189,9 @@ export function useChatFlow(flowConfig) {
     }, delay);
   }, [currentStep, currentMessageIndex, currentStepIndex, flowConfig, collectedData, addMessage, isComplete]);
 
+  // Keep ref updated
+  processNextMessageRef.current = processNextMessage;
+
   // Handle user text input
   const handleUserInput = useCallback((value) => {
     if (!awaitingInput) return;
@@ -288,19 +302,14 @@ export function useChatFlow(flowConfig) {
 
   // Process messages when step/message index changes
   useEffect(() => {
-    // Clear any pending timeouts
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    if (typingTimeoutRef.current) {
-      clearTimeout(typingTimeoutRef.current);
-    }
-
     // Only process if not waiting for user
     if (!awaitingInput && !awaitingCompletion && !awaitingBreathing && !awaitingTimer) {
-      processNextMessage();
+      processNextMessageRef.current?.();
     }
+  }, [currentMessageIndex, currentStepIndex, awaitingInput, awaitingCompletion, awaitingBreathing, awaitingTimer]);
 
+  // Cleanup timeouts on unmount
+  useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -309,7 +318,7 @@ export function useChatFlow(flowConfig) {
         clearTimeout(typingTimeoutRef.current);
       }
     };
-  }, [currentMessageIndex, currentStepIndex, awaitingInput, awaitingCompletion, processNextMessage]);
+  }, []);
 
   // Auto-save draft when collectedData changes
   useEffect(() => {

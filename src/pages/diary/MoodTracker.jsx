@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card } from '../../components/ui';
+import { MoodEmoji, ChevronLeft } from '../../components/icons';
 
 const MOODS = [
-  { value: 1, emoji: '😰', label: 'Очень плохо' },
-  { value: 2, emoji: '😟', label: 'Плохо' },
-  { value: 3, emoji: '😐', label: 'Нормально' },
-  { value: 4, emoji: '🙂', label: 'Хорошо' },
-  { value: 5, emoji: '😊', label: 'Отлично' },
+  { value: 1, label: 'Очень плохо' },
+  { value: 2, label: 'Плохо' },
+  { value: 3, label: 'Нормально' },
+  { value: 4, label: 'Хорошо' },
+  { value: 5, label: 'Отлично' },
 ];
 
 export default function MoodTracker() {
@@ -94,11 +95,11 @@ export default function MoodTracker() {
       <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 safe-area-top flex items-center justify-between"
            style={{ background: 'var(--background)' }}>
         <button
-          className="p-2 rounded-full"
+          className="p-2 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={() => navigate(-1)}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} />
         </button>
         <span className="headline">Трекер настроения</span>
         <div className="w-10" />
@@ -158,7 +159,7 @@ export default function MoodTracker() {
                   setSelectedMood(mood.value);
                 }}
               >
-                <span className="text-3xl">{mood.emoji}</span>
+                <MoodEmoji mood={mood.value} size="lg" />
                 <span
                   className="caption"
                   style={{ color: selectedMood === mood.value ? 'white' : 'var(--label-secondary)' }}

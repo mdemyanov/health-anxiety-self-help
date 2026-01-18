@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Check } from '../../icons';
 
 // Данные когнитивных искажений с подсказками
 const distortionHints = {
@@ -119,9 +120,7 @@ export default function ChatChecklistWithHints({
                       }}
                     >
                       {checked[i] && (
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
+                        <Check size={12} color="white" strokeWidth={3} />
                       )}
                     </div>
 

@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card } from '../../components/ui';
+import { ToolIcon, ChevronLeft } from '../../components/icons';
 
 const STEPS = [
   {
     id: 'welcome',
     title: 'Добрый вечер',
     description: 'Время подвести итоги дня. Эта практика поможет тебе расслабиться.',
-    icon: '🌙',
+    iconTool: 'evening',
   },
   {
     id: 'intention-review',
     title: 'Твоё намерение',
     description: 'Давай вспомним, какое намерение ты ставил утром.',
-    icon: '🎯',
+    iconTool: 'intention',
     showIntention: true,
   },
   {
@@ -22,7 +23,7 @@ const STEPS = [
     description: 'Назови 3 вещи, которые сегодня прошли хорошо.',
     prompt: 'Сегодня было хорошо:',
     placeholder: '1. ...\n2. ...\n3. ...',
-    icon: '✨',
+    iconTool: 'sparkles',
     hasInput: true,
   },
   {
@@ -31,7 +32,7 @@ const STEPS = [
     description: 'Каждый день — возможность для роста.',
     prompt: 'Сегодня я узнал/понял:',
     placeholder: 'Например: Понял, что могу справиться с тревогой...',
-    icon: '📚',
+    iconTool: 'learn',
     hasInput: true,
   },
   {
@@ -40,7 +41,7 @@ const STEPS = [
     description: 'Без самокритики — просто наблюдение.',
     prompt: 'Завтра я мог бы:',
     placeholder: 'Например: Раньше начать дыхательную технику...',
-    icon: '🔄',
+    iconTool: 'improve',
     hasInput: true,
   },
   {
@@ -49,7 +50,7 @@ const STEPS = [
     description: 'За что ты благодарен сегодня?',
     prompt: 'Я благодарен за:',
     placeholder: 'Например: За то что был здоров, за поддержку близких...',
-    icon: '🙏',
+    iconTool: 'gratitude',
     hasInput: true,
   },
   {
@@ -58,13 +59,13 @@ const STEPS = [
     description: 'Если сегодня были тревожные мысли — отпусти их. День закончен.',
     quote: '«Вчерашний день уже мёртв, завтрашний ещё не родился. У нас есть только сегодня.»',
     author: 'Марк Аврелий',
-    icon: '🍃',
+    iconTool: 'letting-go',
   },
   {
     id: 'complete',
     title: 'Спокойной ночи',
     description: 'Ты сделал всё, что мог сегодня. Отдыхай.',
-    icon: '💤',
+    iconTool: 'sleep',
   },
 ];
 
@@ -132,21 +133,23 @@ export default function EveningReflection() {
   return (
     <div className="min-h-screen flex flex-col pb-24">
       {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800 z-50">
-        <div
-          className="h-full transition-all duration-300"
-          style={{ width: `${progress}%`, background: 'var(--apple-purple)' }}
-        />
+      <div className="fixed top-0 left-0 right-0 z-50 safe-area-top">
+        <div className="h-1 bg-gray-200 dark:bg-gray-800">
+          <div
+            className="h-full transition-all duration-300"
+            style={{ width: `${progress}%`, background: 'var(--apple-purple)' }}
+          />
+        </div>
       </div>
 
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between">
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 pt-5 pb-4 safe-area-top flex items-center justify-between">
         <button
-          className="p-2 rounded-full"
+          className="w-10 h-10 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={handleBack}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} className="text-[var(--label)]" />
         </button>
         <span className="headline">Вечерняя рефлексия</span>
         <span className="footnote secondary-text">
@@ -161,7 +164,7 @@ export default function EveningReflection() {
           className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
           style={{ background: 'var(--card-secondary)' }}
         >
-          <span className="text-4xl">{step.icon}</span>
+          <ToolIcon tool={step.iconTool} size={40} className="text-[var(--apple-purple)]" />
         </div>
 
         {/* Title */}

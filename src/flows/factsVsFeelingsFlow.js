@@ -147,7 +147,7 @@ export const factsVsFeelingsFlow = {
         },
         {
           type: 'slider',
-          options: { min: 0, max: 100, unit: '%', initialValue: 50, label: 'Уровень тревоги' },
+          options: { min: 0, max: 100, unit: '%', initialValue: 50, label: 'Уровень тревоги', leftLabel: 'Спокойствие', rightLabel: 'Сильная тревога' },
           delay: 1000,
           awaitCompletion: true,
           saveAs: 'anxietyLevel',

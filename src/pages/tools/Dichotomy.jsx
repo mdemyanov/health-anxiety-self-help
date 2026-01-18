@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card } from '../../components/ui';
+import { ToolIcon, ChevronLeft, Check, X, Sparkles } from '../../components/icons';
 
 const INTRO_STEPS = [
   {
@@ -58,7 +59,7 @@ export default function Dichotomy() {
         className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
         style={{ background: 'var(--card-secondary)' }}
       >
-        <span className="text-4xl">⚖️</span>
+        <ToolIcon tool="dichotomy" size={40} className="text-[var(--apple-green)]" />
       </div>
       <h1 className="title-1 mb-4">{INTRO_STEPS[0].title}</h1>
       <p className="body-text secondary-text mb-6 max-w-sm">
@@ -79,8 +80,8 @@ export default function Dichotomy() {
 
       {/* Can control */}
       <div className="mb-6">
-        <h2 className="headline mb-3" style={{ color: 'var(--apple-green)' }}>
-          ✓ В моей власти
+        <h2 className="headline mb-3 flex items-center gap-2" style={{ color: 'var(--apple-green)' }}>
+          <Check size={18} /> В моей власти
         </h2>
         <Card className="p-3">
           <div className="space-y-3">
@@ -101,8 +102,8 @@ export default function Dichotomy() {
 
       {/* Cannot control */}
       <div>
-        <h2 className="headline mb-3" style={{ color: 'var(--apple-red)' }}>
-          ✗ Не в моей власти
+        <h2 className="headline mb-3 flex items-center gap-2" style={{ color: 'var(--apple-red)' }}>
+          <X size={18} /> Не в моей власти
         </h2>
         <Card className="p-3">
           <div className="space-y-3">
@@ -191,7 +192,7 @@ export default function Dichotomy() {
         className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
         style={{ background: 'rgba(52, 199, 89, 0.15)' }}
       >
-        <span className="text-4xl">🌟</span>
+        <Sparkles size={40} className="text-[var(--apple-green)]" />
       </div>
       <h1 className="title-1 mb-4">Запомни</h1>
       <Card className="p-4 max-w-sm mb-6">
@@ -226,21 +227,21 @@ export default function Dichotomy() {
   return (
     <div className="min-h-screen flex flex-col pb-24">
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between"
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 safe-area-top flex items-center justify-between"
            style={{ background: 'var(--background)' }}>
         <button
-          className="p-2 rounded-full"
+          className="w-10 h-10 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={handleBack}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} className="text-[var(--label)]" />
         </button>
         <span className="headline">Дихотомия контроля</span>
         <div className="w-10" />
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex flex-col pt-16">
+      <div className="flex-1 flex flex-col pt-16 safe-area-top">
         {step === 'intro' && renderIntro()}
         {step === 'exercise' && renderExercise()}
         {step === 'custom' && renderCustom()}

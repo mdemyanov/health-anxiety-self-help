@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui';
+import { ToolIcon } from '../../components/icons';
 
 export default function SosStart() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function SosStart() {
           className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8"
           style={{ background: 'rgba(255, 59, 48, 0.15)' }}
         >
-          <span className="text-5xl">🫂</span>
+          <ToolIcon tool="sos" size={48} className="text-[var(--apple-red)]" />
         </div>
 
         {/* Title */}
@@ -34,15 +35,15 @@ export default function SosStart() {
         {/* Features */}
         <div className="space-y-3 mb-10 text-left">
           <div className="flex items-center gap-3">
-            <span className="text-xl">🌬️</span>
+            <ToolIcon tool="breathing" size={24} className="text-[var(--apple-blue)]" />
             <span className="subhead">Дыхательная техника</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xl">🧊</span>
+            <ToolIcon tool="ice" size={24} className="text-[var(--apple-blue)]" />
             <span className="subhead">Техника заземления</span>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xl">💭</span>
+            <ToolIcon tool="thoughts" size={24} className="text-[var(--apple-purple)]" />
             <span className="subhead">Работа с мыслями</span>
           </div>
         </div>

@@ -98,6 +98,7 @@ export const impostorSyndromeFlow = {
             statusHintTemplate: 'Осталось ещё {remaining}',
           },
           delay: 1800,
+          awaitCompletion: true,
           saveAs: 'achievements',
         },
       ],

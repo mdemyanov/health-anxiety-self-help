@@ -1,0 +1,61 @@
+export { default as ToolIcon } from './ToolIcon';
+export { default as MoodEmoji, MOOD_EMOJIS, MOOD_LABELS } from './MoodEmoji';
+export { HomeIcon, ToolsIcon, BookIcon, CalendarIcon } from './TabBarIcons';
+
+// Re-export commonly used Lucide icons for convenience
+export {
+  Wind,
+  Pause,
+  Wrench,
+  BookOpen,
+  HeartHandshake,
+  Globe,
+  FileText,
+  BarChart3,
+  Search,
+  ClipboardList,
+  Users,
+  Theater,
+  Target,
+  Scale,
+  Home,
+  Sunrise,
+  Moon,
+  Sun,
+  RefreshCw,
+  Trash2,
+  Heart,
+  Settings,
+  ChevronRight,
+  ChevronLeft,
+  Eye,
+  Hand,
+  Ear,
+  Bird,
+  Building2,
+  Building,
+  Map,
+  Sparkles,
+  MessageCircle,
+  Snowflake,
+  Library,
+  MoonStar,
+  Leaf,
+  Shield,
+  Hourglass,
+  Check,
+  X,
+  Compass,
+  Smile,
+  Play,
+  Clock,
+  Send,
+  // Custom icons
+  NoseIcon,
+  TongueIcon,
+  PrayerIcon,
+  DoveIcon,
+} from './ToolIcon';
+
+// Additional icons for TabBar
+export { Calendar } from 'lucide-react';

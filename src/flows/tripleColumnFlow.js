@@ -131,7 +131,7 @@ export const tripleColumnFlow = {
         },
         {
           type: 'slider',
-          options: { min: 0, max: 100, unit: '%', initialValue: 50 },
+          options: { min: 0, max: 100, unit: '%', initialValue: 50, leftLabel: 'Совсем не верю', rightLabel: 'Полностью верю' },
           delay: 1000,
           awaitCompletion: true,
           saveAs: 'beliefRating',

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui';
+import { ChevronLeft, Check } from '../../components/icons';
 
 const STEPS = [
   {
@@ -106,11 +107,11 @@ export default function StopPause() {
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between">
         <button
-          className="p-2 rounded-full"
+          className="p-2 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={handleBack}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} />
         </button>
         <span className="headline">СТОП-пауза</span>
         <span className="footnote secondary-text">
@@ -161,7 +162,7 @@ export default function StopPause() {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <span className="text-2xl">✓</span>
+                <Check size={28} className="text-[var(--apple-green)]" />
                 <span className="headline" style={{ color: 'var(--apple-green)' }}>
                   Готово!
                 </span>

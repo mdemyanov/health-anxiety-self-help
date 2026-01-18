@@ -97,6 +97,7 @@ export const decisionFlow = {
             statusHintTemplate: 'Ещё {remaining}',
           },
           delay: 1000,
+          awaitCompletion: true,
           saveAs: 'options',
         },
       ],

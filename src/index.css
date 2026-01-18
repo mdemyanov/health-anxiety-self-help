@@ -342,6 +342,49 @@ body {
   border-radius: inherit;
 }
 
+/* Tab Bar Items - iOS SF Symbols style */
+.tab-bar-item {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  padding: 6px 4px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.15s ease-out, transform 0.15s ease-out;
+  color: var(--label-secondary);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tab-bar-item[data-active="true"] {
+  color: var(--apple-blue);
+}
+
+.tab-bar-item:active {
+  transform: scale(0.9);
+}
+
+.tab-bar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 2px;
+}
+
+.tab-bar-label {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
 /* Breathing animation */
 .breathing-circle {
   background: var(--apple-blue);
@@ -466,6 +509,188 @@ body {
   animation: liquid-glass-shimmer 3s infinite;
   pointer-events: none;
   border-radius: inherit;
+}
+
+/* ============================
+   Liquid Glass Icon Styles
+   ============================ */
+
+/* Base icon styling for Liquid Glass design */
+.icon-glass {
+  opacity: 0.85;
+  transition: all 0.2s ease;
+}
+
+.icon-glass:hover {
+  opacity: 1;
+}
+
+/* Icon container with glass background */
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-container-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.icon-container-md {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.icon-container-lg {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+}
+
+.icon-container-xl {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+}
+
+/* Icon with glass tint background */
+.icon-tinted {
+  background: var(--glass-bg-button);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Colored icon containers */
+.icon-blue {
+  background: rgba(0, 122, 255, 0.12);
+  color: var(--apple-blue);
+}
+
+.icon-green {
+  background: rgba(52, 199, 89, 0.12);
+  color: var(--apple-green);
+}
+
+.icon-red {
+  background: rgba(255, 59, 48, 0.12);
+  color: var(--apple-red);
+}
+
+.icon-orange {
+  background: rgba(255, 149, 0, 0.12);
+  color: var(--apple-orange);
+}
+
+.icon-purple {
+  background: rgba(175, 82, 222, 0.12);
+  color: var(--apple-purple);
+}
+
+.dark .icon-blue {
+  background: rgba(10, 132, 255, 0.18);
+}
+
+.dark .icon-green {
+  background: rgba(48, 209, 88, 0.18);
+}
+
+.dark .icon-red {
+  background: rgba(255, 69, 58, 0.18);
+}
+
+.dark .icon-orange {
+  background: rgba(255, 159, 10, 0.18);
+}
+
+.dark .icon-purple {
+  background: rgba(191, 90, 242, 0.18);
+}
+
+/* Icon with subtle gradient glow */
+.icon-glow {
+  position: relative;
+}
+
+.icon-glow::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at center,
+    currentColor 0%,
+    transparent 70%
+  );
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Interactive icon button */
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg-button);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid var(--glass-border-subtle);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.icon-button:active {
+  transform: scale(0.92);
+  filter: brightness(0.95);
+}
+
+.icon-button:hover {
+  background: var(--glass-bg-elevated);
+}
+
+/* Icon animation for emphasis */
+@keyframes icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.icon-pulse {
+  animation: icon-pulse 2s ease-in-out infinite;
+}
+
+/* Icon bounce for completion */
+@keyframes icon-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.icon-bounce {
+  animation: icon-bounce 0.5s ease-out;
+}
+
+/* Subtle icon shadow for depth */
+.icon-shadow {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.dark .icon-shadow {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 /* ============================

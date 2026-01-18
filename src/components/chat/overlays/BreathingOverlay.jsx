@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Check } from '../../icons';
 
 export default function BreathingOverlay({
   isOpen,
@@ -84,9 +85,7 @@ export default function BreathingOverlay({
                   className="w-20 h-20 rounded-full flex items-center justify-center"
                   style={{ background: 'var(--apple-green)' }}
                 >
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
+                  <Check size={40} color="white" strokeWidth={3} />
                 </div>
                 <span className="text-lg font-medium" style={{ color: 'var(--apple-green)' }}>
                   Отлично! Дыхание завершено

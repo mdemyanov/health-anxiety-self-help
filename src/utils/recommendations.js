@@ -6,23 +6,24 @@
 import { getToolUsage, getToolStats, TOOL_NAMES } from './analytics';
 
 // Конфигурация техник для рекомендаций
+// icon теперь содержит ID для ToolIcon компонента
 const TOOL_CONFIG = {
-  'sos': { icon: '🫂', path: '/sos', priority: 10 },
-  'breathing': { icon: '🌬️', path: '/tools/breathing', priority: 9 },
-  'stop-pause': { icon: '⏸️', path: '/tools/stop-pause', priority: 8 },
-  'grounding': { icon: '🌍', path: '/tools/grounding', priority: 7 },
-  'abc-diary': { icon: '📝', path: '/tools/abc-diary', priority: 6 },
-  'decatastrophize': { icon: '🎯', path: '/tools/decatastrophize', priority: 6 },
-  'dichotomy': { icon: '⚖️', path: '/stoic/dichotomy', priority: 5 },
-  'double-standard': { icon: '👥', path: '/tools/double-standard', priority: 5 },
-  'triple-column': { icon: '📊', path: '/tools/triple-column', priority: 5 },
-  'facts-vs-feelings': { icon: '🧠', path: '/tools/facts-vs-feelings', priority: 5 },
-  'should-statements': { icon: '📜', path: '/tools/should-statements', priority: 5 },
-  'morning': { icon: '🌅', path: '/stoic/morning', priority: 4 },
-  'evening': { icon: '🌙', path: '/stoic/evening', priority: 4 },
-  'view-from-above': { icon: '🏔️', path: '/stoic/view-from-above', priority: 4 },
-  'impostor-syndrome': { icon: '🎭', path: '/tools/impostor-syndrome', priority: 5 },
-  'decision': { icon: '🧭', path: '/stoic/decision', priority: 5 },
+  'sos': { icon: 'sos', path: '/sos', priority: 10 },
+  'breathing': { icon: 'breathing', path: '/tools/breathing', priority: 9 },
+  'stop-pause': { icon: 'stop-pause', path: '/tools/stop-pause', priority: 8 },
+  'grounding': { icon: 'grounding', path: '/tools/grounding', priority: 7 },
+  'abc-diary': { icon: 'abc-diary', path: '/tools/abc-diary', priority: 6 },
+  'decatastrophize': { icon: 'decatastrophize', path: '/tools/decatastrophize', priority: 6 },
+  'dichotomy': { icon: 'dichotomy', path: '/stoic/dichotomy', priority: 5 },
+  'double-standard': { icon: 'double-standard', path: '/tools/double-standard', priority: 5 },
+  'triple-column': { icon: 'triple-column', path: '/tools/triple-column', priority: 5 },
+  'facts-vs-feelings': { icon: 'facts-vs-feelings', path: '/tools/facts-vs-feelings', priority: 5 },
+  'should-statements': { icon: 'should-statements', path: '/tools/should-statements', priority: 5 },
+  'morning': { icon: 'morning', path: '/stoic/morning', priority: 4 },
+  'evening': { icon: 'evening', path: '/stoic/evening', priority: 4 },
+  'view-from-above': { icon: 'view-from-above', path: '/stoic/view-from-above', priority: 4 },
+  'impostor-syndrome': { icon: 'impostor-syndrome', path: '/tools/impostor-syndrome', priority: 5 },
+  'decision': { icon: 'decision', path: '/stoic/decision', priority: 5 },
 };
 
 // Названия когнитивных искажений для анализа

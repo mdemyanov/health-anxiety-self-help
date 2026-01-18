@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '../../components/ui';
+import { ToolIcon, ChevronLeft, Heart, Library } from '../../components/icons';
 import { quotes } from '../../data/quotes';
 
 export default function Quotes() {
@@ -41,21 +42,21 @@ export default function Quotes() {
   return (
     <div className="min-h-screen pb-24">
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between"
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 safe-area-top flex items-center justify-between"
            style={{ background: 'var(--background)' }}>
         <button
-          className="p-2 rounded-full"
+          className="w-10 h-10 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={() => navigate(-1)}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} className="text-[var(--label)]" />
         </button>
         <span className="headline">Цитаты стоиков</span>
         <div className="w-10" />
       </div>
 
       {/* Filters */}
-      <div className="px-4 pt-16 pb-4">
+      <div className="px-4 pt-16 pb-4 safe-area-top">
         <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
           <FilterChip
             label="Все"
@@ -66,7 +67,7 @@ export default function Quotes() {
             label={`Избранные (${favorites.length})`}
             active={filter === 'favorites'}
             onClick={() => setFilter('favorites')}
-            icon="❤️"
+            icon={<Heart size={14} className={filter === 'favorites' ? 'text-white' : 'text-[var(--apple-red)]'} fill={filter === 'favorites' ? 'currentColor' : 'var(--apple-red)'} />}
           />
           {authors.map((author) => (
             <FilterChip
@@ -83,7 +84,7 @@ export default function Quotes() {
       <div className="px-4 space-y-4">
         {filteredQuotes.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-4xl mb-4">📚</p>
+            <Library size={48} className="mx-auto mb-4 text-[var(--label-secondary)]" />
             <p className="callout secondary-text">
               {filter === 'favorites'
                 ? 'У вас пока нет избранных цитат'
@@ -108,14 +109,14 @@ export default function Quotes() {
 function FilterChip({ label, active, onClick, icon }) {
   return (
     <button
-      className="flex-shrink-0 px-4 py-2 rounded-full subhead transition-all"
+      className="flex-shrink-0 px-4 py-2 rounded-full subhead transition-all flex items-center gap-1"
       style={{
         background: active ? 'var(--apple-blue)' : 'var(--card-secondary)',
         color: active ? 'white' : 'var(--label)',
       }}
       onClick={onClick}
     >
-      {icon && <span className="mr-1">{icon}</span>}
+      {icon && icon}
       {label}
     </button>
   );
@@ -134,7 +135,11 @@ function QuoteCard({ quote, isFavorite, onToggleFavorite }) {
           style={{ background: isFavorite ? 'rgba(255, 59, 48, 0.15)' : 'var(--card-secondary)' }}
           onClick={onToggleFavorite}
         >
-          <span className="text-lg">{isFavorite ? '❤️' : '🤍'}</span>
+          <Heart
+            size={20}
+            className={isFavorite ? 'text-[var(--apple-red)]' : 'text-[var(--label-secondary)]'}
+            fill={isFavorite ? 'var(--apple-red)' : 'none'}
+          />
         </button>
       </div>
     </Card>

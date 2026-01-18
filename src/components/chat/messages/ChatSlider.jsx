@@ -6,6 +6,8 @@ export default function ChatSlider({
   max = 100,
   unit = '%',
   initialValue = 50,
+  leftLabel,
+  rightLabel,
   onSubmit
 }) {
   const [value, setValue] = useState(initialValue);
@@ -73,10 +75,10 @@ export default function ChatSlider({
 
           <div className="flex justify-between mb-4">
             <span className="text-xs" style={{ color: 'var(--label-tertiary)' }}>
-              Невозможно
+              {leftLabel ?? min}
             </span>
             <span className="text-xs" style={{ color: 'var(--label-tertiary)' }}>
-              Точно случится
+              {rightLabel ?? max}
             </span>
           </div>
 

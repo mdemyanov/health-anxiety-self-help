@@ -47,7 +47,7 @@ export const decatastrophizeFlow = {
         },
         {
           type: 'slider',
-          options: { min: 0, max: 100, unit: '%', initialValue: 50 },
+          options: { min: 0, max: 100, unit: '%', initialValue: 50, leftLabel: 'Невозможно', rightLabel: 'Точно случится' },
           delay: 1500,
           awaitCompletion: true,
           saveAs: 'probability',
@@ -148,7 +148,7 @@ export const decatastrophizeFlow = {
         },
         {
           type: 'slider',
-          options: { min: 0, max: 100, unit: '%', initialValue: 30 },
+          options: { min: 0, max: 100, unit: '%', initialValue: 30, leftLabel: 'Невозможно', rightLabel: 'Точно случится' },
           delay: 1000,
           awaitCompletion: true,
           saveAs: 'new_probability',

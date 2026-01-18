@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { ChevronLeft } from '../icons';
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import ChatTimerBar from './ChatTimerBar';
@@ -75,8 +76,10 @@ export default function ChatContainer({
           <ChatSlider
             min={message.options?.min || 0}
             max={message.options?.max || 100}
-            unit={message.options?.unit || '%'}
+            unit={message.options?.unit ?? '%'}
             initialValue={message.options?.initialValue}
+            leftLabel={message.options?.leftLabel}
+            rightLabel={message.options?.rightLabel}
             onSubmit={(value) => onInteractionComplete?.(value)}
           />
         );
@@ -166,9 +169,7 @@ export default function ChatContainer({
             className="relative z-10 w-11 h-11 flex items-center justify-center rounded-full transition-transform active:scale-90 focus-visible:ring-2 focus-visible:ring-offset-1"
             style={{ background: 'var(--glass-bg-button)', '--tw-ring-color': 'var(--apple-blue)' }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
+            <ChevronLeft size={20} />
           </button>
           <h1 className="relative z-10 headline flex-1">{title}</h1>
           {totalSteps > 1 && (

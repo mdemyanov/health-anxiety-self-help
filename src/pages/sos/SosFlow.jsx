@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui';
+import { ToolIcon, ChevronLeft, Sparkles } from '../../components/icons';
 import BreathingCircle from '../../components/breathing/BreathingCircle';
 
 const STEPS = [
@@ -8,26 +9,26 @@ const STEPS = [
     id: 'welcome',
     title: 'Начнём с дыхания',
     description: 'Глубокое дыхание активирует парасимпатическую нервную систему и помогает телу успокоиться.',
-    icon: '🌬️',
+    iconTool: 'breathing',
   },
   {
     id: 'breathing',
     title: 'Дыши со мной',
     description: 'Следуй за кругом: вдох когда он увеличивается, выдох когда уменьшается.',
-    icon: '🫁',
+    iconTool: 'breathing',
     isBreathing: true,
   },
   {
     id: 'grounding-intro',
     title: 'Техника 5-4-3-2-1',
     description: 'Теперь давай заземлимся. Эта техника поможет вернуться в настоящий момент.',
-    icon: '🧊',
+    iconTool: 'ice',
   },
   {
     id: 'grounding-5',
     title: '5 вещей',
     description: 'Назови 5 вещей, которые ты ВИДИШЬ вокруг себя прямо сейчас.',
-    icon: '👀',
+    iconTool: 'see',
     isGrounding: true,
     count: 5,
     sense: 'вижу',
@@ -36,7 +37,7 @@ const STEPS = [
     id: 'grounding-4',
     title: '4 вещи',
     description: 'Назови 4 вещи, которые ты можешь ПОТРОГАТЬ.',
-    icon: '✋',
+    iconTool: 'touch',
     isGrounding: true,
     count: 4,
     sense: 'трогаю',
@@ -45,7 +46,7 @@ const STEPS = [
     id: 'grounding-3',
     title: '3 звука',
     description: 'Назови 3 звука, которые ты СЛЫШИШЬ.',
-    icon: '👂',
+    iconTool: 'hear',
     isGrounding: true,
     count: 3,
     sense: 'слышу',
@@ -54,7 +55,7 @@ const STEPS = [
     id: 'grounding-2',
     title: '2 запаха',
     description: 'Назови 2 запаха, которые ты ЧУВСТВУЕШЬ.',
-    icon: '👃',
+    iconTool: 'smell',
     isGrounding: true,
     count: 2,
     sense: 'чувствую',
@@ -63,7 +64,7 @@ const STEPS = [
     id: 'grounding-1',
     title: '1 вкус',
     description: 'Назови 1 вкус, который ты ощущаешь или можешь представить.',
-    icon: '👅',
+    iconTool: 'taste',
     isGrounding: true,
     count: 1,
     sense: 'ощущаю',
@@ -72,20 +73,20 @@ const STEPS = [
     id: 'thoughts',
     title: 'Работа с мыслями',
     description: 'Теперь давай посмотрим на тревожные мысли. Помни: мысль — это не факт.',
-    icon: '💭',
+    iconTool: 'thoughts',
   },
   {
     id: 'dichotomy',
     title: 'Что я могу контролировать?',
     description: 'Раздели свои беспокойства на то, что ты можешь контролировать, и то, что нет.',
-    icon: '⚖️',
+    iconTool: 'dichotomy',
     isDichotomy: true,
   },
   {
     id: 'complete',
     title: 'Отлично!',
     description: 'Ты прошёл через это. Помни: тревога временна, и у тебя есть инструменты, чтобы с ней справиться.',
-    icon: '🌟',
+    iconTool: 'sparkles',
     isComplete: true,
   },
 ];
@@ -136,27 +137,29 @@ export default function SosFlow() {
   return (
     <div className="min-h-screen flex flex-col pb-24">
       {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800 z-50">
-        <div
-          className="h-full transition-all duration-300"
-          style={{
-            width: `${progress}%`,
-            background: 'var(--apple-blue)',
-          }}
-        />
+      <div className="fixed top-0 left-0 right-0 z-50 safe-area-top">
+        <div className="h-1 bg-gray-200 dark:bg-gray-800">
+          <div
+            className="h-full transition-all duration-300"
+            style={{
+              width: `${progress}%`,
+              background: 'var(--apple-blue)',
+            }}
+          />
+        </div>
       </div>
 
       {/* Back button */}
       <button
-        className="fixed top-4 left-4 z-50 p-2 rounded-full"
-        style={{ background: 'var(--card-secondary)' }}
+        className="fixed top-4 left-4 z-50 w-10 h-10 rounded-full flex items-center justify-center safe-area-top"
+        style={{ background: 'var(--card-secondary)', marginTop: 'env(safe-area-inset-top)' }}
         onClick={handleBack}
       >
-        <span className="text-lg">←</span>
+        <ChevronLeft size={20} className="text-[var(--label)]" />
       </button>
 
       {/* Step counter */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 right-4 z-50 safe-area-top" style={{ marginTop: 'env(safe-area-inset-top)' }}>
         <span className="footnote secondary-text">
           {currentStep + 1} / {STEPS.length}
         </span>
@@ -169,7 +172,7 @@ export default function SosFlow() {
           className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
           style={{ background: 'var(--card-secondary)' }}
         >
-          <span className="text-4xl">{step.icon}</span>
+          <ToolIcon tool={step.iconTool} size={40} className="text-[var(--apple-blue)]" />
         </div>
 
         {/* Title */}

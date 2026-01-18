@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Check, X } from '../../icons';
 
 export default function ChatChecklist({
   items = [],
@@ -41,7 +42,10 @@ export default function ChatChecklist({
           className="font-semibold mb-2 flex items-center gap-2"
           style={{ color: listColor }}
         >
-          {listColor === 'var(--apple-green)' ? '✓' : '✗'} {listTitle}
+          {listColor === 'var(--apple-green)'
+            ? <Check size={16} strokeWidth={3} />
+            : <X size={16} strokeWidth={3} />
+          } {listTitle}
         </h4>
       )}
       <div className="space-y-2">
@@ -62,9 +66,7 @@ export default function ChatChecklist({
                 onClick={() => handleCheck(key)}
               >
                 {checked[key] && (
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
+                  <Check size={12} color="white" strokeWidth={3} />
                 )}
               </div>
               <span className="text-base">{item}</span>

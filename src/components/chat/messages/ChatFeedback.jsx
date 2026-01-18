@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { MoodEmoji, MOOD_EMOJIS } from '../../icons';
 
 const MOOD_OPTIONS = [
-  { emoji: '😔', label: 'Плохо', value: 1 },
-  { emoji: '😐', label: 'Так себе', value: 2 },
-  { emoji: '🙂', label: 'Нормально', value: 3 },
-  { emoji: '😊', label: 'Хорошо', value: 4 },
-  { emoji: '😄', label: 'Отлично', value: 5 },
+  { label: 'Плохо', value: 1 },
+  { label: 'Так себе', value: 2 },
+  { label: 'Нормально', value: 3 },
+  { label: 'Хорошо', value: 4 },
+  { label: 'Отлично', value: 5 },
 ];
 
 export default function ChatFeedback({ options = {}, onSubmit }) {
@@ -36,9 +37,7 @@ export default function ChatFeedback({ options = {}, onSubmit }) {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
       >
-        <span className="text-2xl">
-          {mood !== null && MOOD_OPTIONS.find(m => m.value === mood)?.emoji}
-        </span>
+        {mood !== null && <MoodEmoji mood={mood} size="md" />}
         {rating !== null && (
           <span
             className="font-bold"
@@ -76,7 +75,7 @@ export default function ChatFeedback({ options = {}, onSubmit }) {
                     setMood(option.value);
                     navigator.vibrate?.(10);
                   }}
-                  className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all ${
+                  className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
                     mood === option.value
                       ? 'bg-[var(--apple-blue)]/20 scale-110'
                       : 'bg-[var(--bg-secondary)] opacity-60 hover:opacity-100'
@@ -84,7 +83,7 @@ export default function ChatFeedback({ options = {}, onSubmit }) {
                   whileTap={{ scale: 0.9 }}
                   title={option.label}
                 >
-                  {option.emoji}
+                  <MoodEmoji mood={option.value} size="md" />
                 </motion.button>
               ))}
             </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button } from '../components/ui';
 import { Header } from '../components/layout';
+import { ToolIcon, BarChart3, BookOpen } from '../components/icons';
 
 export default function Diary() {
   const navigate = useNavigate();
@@ -25,21 +26,23 @@ export default function Diary() {
           <div className="flex gap-3">
             <Button
               variant="secondary"
-              className="flex-1"
+              className="flex-1 flex items-center justify-center gap-2"
               onClick={() => navigate('/diary/mood')}
             >
-              😊 Настроение
+              <ToolIcon tool="mood" size={20} /> Настроение
             </Button>
             <Button
               variant="secondary"
               onClick={() => navigate('/diary/statistics')}
             >
-              📊
+              <BarChart3 size={20} />
             </Button>
           </div>
 
           <div className="text-center py-8">
-            <p className="text-5xl mb-4">📓</p>
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--card-secondary)' }}>
+              <BookOpen size={32} className="text-[var(--apple-blue)]" />
+            </div>
             <p className="secondary-text mb-6">
               Записей ABC-дневника пока нет. Начни вести дневник мыслей.
             </p>
@@ -68,16 +71,16 @@ export default function Diary() {
           </Button>
           <Button
             variant="secondary"
-            className="flex-1"
+            className="flex-1 flex items-center justify-center gap-2"
             onClick={() => navigate('/diary/mood')}
           >
-            😊 Настроение
+            <ToolIcon tool="mood" size={20} /> Настроение
           </Button>
           <Button
             variant="secondary"
             onClick={() => navigate('/diary/statistics')}
           >
-            📊
+            <BarChart3 size={20} />
           </Button>
         </div>
 

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ActionCard, Card } from '../components/ui';
 import { Header } from '../components/layout';
+import { ToolIcon } from '../components/icons';
 import { quotes } from '../data/quotes';
 
 export default function Stoic() {
@@ -15,7 +16,9 @@ export default function Stoic() {
           <div className="space-y-3">
             <Card className="p-4">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">🌅</span>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'var(--card-secondary)' }}>
+                  <ToolIcon tool="morning" size={24} className="text-[var(--apple-orange)]" />
+                </div>
                 <div>
                   <p className="headline">Утренняя практика</p>
                   <p className="secondary-text text-sm">Подготовка к дню</p>
@@ -40,7 +43,9 @@ export default function Stoic() {
             </Card>
             <Card className="p-4">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">🌙</span>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'var(--card-secondary)' }}>
+                  <ToolIcon tool="evening" size={24} className="text-[var(--apple-purple)]" />
+                </div>
                 <div>
                   <p className="headline">Вечерняя рефлексия</p>
                   <p className="secondary-text text-sm">Обзор дня</p>
@@ -71,12 +76,22 @@ export default function Stoic() {
           <p className="secondary-text mb-3">Техники</p>
           <div className="space-y-3">
             <ActionCard to="/tools/decision">
-              <p className="headline">🎯 Принятие решений</p>
-              <p className="secondary-text text-sm">Стоический подход к выбору</p>
+              <div className="flex items-center gap-3">
+                <ToolIcon tool="decision" size={24} className="text-[var(--apple-blue)]" />
+                <div>
+                  <p className="headline">Принятие решений</p>
+                  <p className="secondary-text text-sm">Стоический подход к выбору</p>
+                </div>
+              </div>
             </ActionCard>
             <ActionCard to="/stoic/view-from-above">
-              <p className="headline">🌍 Взгляд сверху</p>
-              <p className="secondary-text text-sm">Космическая перспектива</p>
+              <div className="flex items-center gap-3">
+                <ToolIcon tool="view-from-above" size={24} className="text-[var(--apple-green)]" />
+                <div>
+                  <p className="headline">Взгляд сверху</p>
+                  <p className="secondary-text text-sm">Космическая перспектива</p>
+                </div>
+              </div>
             </ActionCard>
           </div>
         </section>
@@ -86,8 +101,13 @@ export default function Stoic() {
           <p className="secondary-text mb-3">Мудрость</p>
           <div className="space-y-3">
             <ActionCard to="/stoic/quotes">
-              <p className="headline">📖 Цитаты стоиков</p>
-              <p className="secondary-text text-sm">{quotes.length} цитат</p>
+              <div className="flex items-center gap-3">
+                <ToolIcon tool="quotes" size={24} className="text-[var(--apple-orange)]" />
+                <div>
+                  <p className="headline">Цитаты стоиков</p>
+                  <p className="secondary-text text-sm">{quotes.length} цитат</p>
+                </div>
+              </div>
             </ActionCard>
           </div>
         </section>

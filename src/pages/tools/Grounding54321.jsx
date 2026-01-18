@@ -1,40 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui';
+import { ToolIcon, ChevronLeft } from '../../components/icons';
 
 const STEPS = [
   {
     count: 5,
     sense: 'ВИДИШЬ',
-    icon: '👀',
+    iconTool: 'see',
     color: 'var(--apple-blue)',
     placeholder: 'Я вижу...',
   },
   {
     count: 4,
     sense: 'ТРОГАЕШЬ',
-    icon: '✋',
+    iconTool: 'touch',
     color: 'var(--apple-green)',
     placeholder: 'Я трогаю...',
   },
   {
     count: 3,
     sense: 'СЛЫШИШЬ',
-    icon: '👂',
+    iconTool: 'hear',
     color: 'var(--apple-purple)',
     placeholder: 'Я слышу...',
   },
   {
     count: 2,
     sense: 'ЧУВСТВУЕШЬ (запах)',
-    icon: '👃',
+    iconTool: 'smell',
     color: 'var(--apple-orange)',
     placeholder: 'Я чувствую запах...',
   },
   {
     count: 1,
     sense: 'ОЩУЩАЕШЬ (вкус)',
-    icon: '👅',
+    iconTool: 'taste',
     color: 'var(--apple-red)',
     placeholder: 'Я ощущаю вкус...',
   },
@@ -84,21 +85,23 @@ export default function Grounding54321() {
   return (
     <div className="min-h-screen flex flex-col pb-24">
       {/* Progress bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-800 z-50">
-        <div
-          className="h-full transition-all duration-300"
-          style={{ width: `${progress}%`, background: step.color }}
-        />
+      <div className="fixed top-0 left-0 right-0 z-50 safe-area-top">
+        <div className="h-1 bg-gray-200 dark:bg-gray-800">
+          <div
+            className="h-full transition-all duration-300"
+            style={{ width: `${progress}%`, background: step.color }}
+          />
+        </div>
       </div>
 
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between">
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 pt-5 pb-4 safe-area-top flex items-center justify-between">
         <button
-          className="p-2 rounded-full"
+          className="w-10 h-10 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={handleBack}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} className="text-[var(--label)]" />
         </button>
         <span className="headline">Техника 5-4-3-2-1</span>
         <span className="footnote secondary-text">
@@ -113,7 +116,7 @@ export default function Grounding54321() {
           className="w-20 h-20 rounded-full flex items-center justify-center mb-4"
           style={{ background: `${step.color}20` }}
         >
-          <span className="text-4xl">{step.icon}</span>
+          <ToolIcon tool={step.iconTool} size={40} style={{ color: step.color }} />
         </div>
 
         {/* Count badge */}

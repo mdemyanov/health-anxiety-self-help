@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui';
+import { ChevronLeft } from '../../components/icons';
 
 const STEPS = [
   {
@@ -101,11 +102,11 @@ export default function AbcDiary() {
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-40 px-4 pt-5 pb-4 safe-area-top flex items-center justify-between">
         <button
-          className="p-2 rounded-full"
+          className="p-2 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={handleBack}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} />
         </button>
         <span className="headline">ABC-дневник</span>
         <span className="footnote secondary-text">

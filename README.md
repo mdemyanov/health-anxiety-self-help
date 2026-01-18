@@ -1,8 +1,93 @@
-# React + Vite
+# Health Anxiety Self-Help (Executive Edition)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PWA-приложение самопомощи для руководителей IT-компаний (35-50 лет).
+Объединяет когнитивно-поведенческую терапию (КПТ) и стоическую философию.
 
-Currently, two official plugins are available:
+**Версия**: 4.0 | **Стек**: React 18 + Vite + Tailwind CSS 4 + Framer Motion
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## Особенности
+
+### Экстренная помощь
+- **SOS-модуль** — комплексная помощь при панике
+
+### Дыхательные техники
+- Дыхание "Квадрат" (4-4-4-4)
+- Дыхание 4-7-8
+
+### КПТ-инструменты (13 chat flows)
+- СТОП-пауза
+- Техника 54321 (заземление)
+- ABC-дневник с 10 когнитивными искажениями
+- Декатастрофизация
+- Двойной стандарт
+- Три колонки
+- Факты vs Чувства
+- Работа с "должен"
+
+### Стоические практики
+- Дихотомия контроля
+- Утренняя практика
+- Вечерняя рефлексия
+- Взгляд сверху
+- 40 цитат стоиков
+
+### Дневник
+- Трекер настроения с графиком за 7 дней
+
+---
+
+## Технологии
+
+- **React 18** + **Vite** — быстрая сборка и HMR
+- **Tailwind CSS 4** — утилитарные стили
+- **Framer Motion** — анимации
+- **PWA** — офлайн-режим, установка на устройство
+- **Apple Liquid Glass** — CSS-based glass effects (iOS 26 style)
+
+---
+
+## Быстрый старт
+
+```bash
+# Установка зависимостей
+npm install --legacy-peer-deps
+
+# Запуск dev-сервера
+npm run dev
+```
+
+---
+
+## Команды
+
+| Команда | Описание |
+|---------|----------|
+| `npm run dev` | Dev-сервер с HMR |
+| `npm run build` | Production-сборка |
+| `npm run test` | Unit-тесты (Vitest) |
+| `npm run test:e2e` | E2E-тесты (Playwright) |
+
+---
+
+## Документация
+
+| Файл | Содержание |
+|------|------------|
+| [PRD.md](./PRD.md) | Продукт, аудитория, roadmap |
+| [ARCHITECTURE.md](./ARCHITECTURE.md) | Техническая архитектура |
+| [CLAUDE.md](./CLAUDE.md) | AI-инструкции для Claude Code |
+| [health-anxiety-self-help-guide.md](./health-anxiety-self-help-guide.md) | Контент и методички |
+
+---
+
+## Методология
+
+Основано на книгах:
+- **"Думай как римский император"** (Donald Robertson) — стоические практики
+- **"Терапия настроения"** (David Burns) — КПТ и 10 когнитивных искажений
+
+---
+
+*Последнее обновление: январь 2026*

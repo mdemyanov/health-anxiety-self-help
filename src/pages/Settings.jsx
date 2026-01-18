@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button } from '../components/ui';
 import { useTheme } from '../context/ThemeContext';
+import { ChevronLeft, Sun, Moon, RefreshCw } from '../components/icons';
 import {
   exportAllData,
   downloadAsFile,
@@ -69,9 +70,9 @@ export default function Settings() {
   };
 
   const themeOptions = [
-    { value: 'auto', label: 'Авто', icon: '🔄' },
-    { value: 'light', label: 'Светлая', icon: '☀️' },
-    { value: 'dark', label: 'Тёмная', icon: '🌙' },
+    { value: 'auto', label: 'Авто', Icon: RefreshCw },
+    { value: 'light', label: 'Светлая', Icon: Sun },
+    { value: 'dark', label: 'Тёмная', Icon: Moon },
   ];
 
   return (
@@ -86,7 +87,7 @@ export default function Settings() {
           className="w-10 h-10 flex items-center justify-center rounded-full"
           style={{ background: 'var(--card-secondary)' }}
         >
-          ←
+          <ChevronLeft size={20} />
         </button>
         <h1 className="title-2 m-0">Настройки</h1>
       </header>
@@ -125,7 +126,7 @@ export default function Settings() {
                   color: theme === option.value ? 'white' : 'var(--label)',
                 }}
               >
-                <span className="text-xl">{option.icon}</span>
+                <option.Icon size={24} />
                 <span className="text-sm">{option.label}</span>
               </button>
             ))}

@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card } from '../../components/ui';
+import { ToolIcon, ChevronLeft } from '../../components/icons';
 
 const STEPS = [
   {
     id: 'welcome',
     title: 'Доброе утро',
     description: 'Начни день с ясного ума. Эта практика займёт 5 минут.',
-    icon: '🌅',
+    iconTool: 'morning',
   },
   {
     id: 'memento',
@@ -15,7 +16,7 @@ const STEPS = [
     description: 'Помни о смертности. Не для страха, а чтобы ценить каждый момент.',
     quote: '«Каждый день думай о смерти, и тогда в мыслях твоих не будет ничего низкого.»',
     author: 'Эпиктет',
-    icon: '⏳',
+    iconTool: 'hourglass',
   },
   {
     id: 'premeditatio',
@@ -23,7 +24,7 @@ const STEPS = [
     description: 'Представь, что может пойти не так сегодня. Это не пессимизм — это подготовка.',
     prompt: 'Что может пойти не так сегодня?',
     placeholder: 'Например: Могу получить плохие новости, может быть тревожный день...',
-    icon: '🛡️',
+    iconTool: 'shield',
     hasInput: true,
   },
   {
@@ -32,7 +33,7 @@ const STEPS = [
     description: 'Если это случится — я приму это. Я справлюсь с тем, что в моей власти.',
     quote: '«Не то, что с нами случается, а то, как мы к этому относимся — определяет нашу жизнь.»',
     author: 'Эпиктет',
-    icon: '🙏',
+    iconTool: 'gratitude',
   },
   {
     id: 'dichotomy',
@@ -40,7 +41,7 @@ const STEPS = [
     description: 'Что сегодня в моей власти, а что нет?',
     prompt: 'Сегодня я сосредоточусь на том, что могу контролировать:',
     placeholder: 'Например: Мои действия, мой настрой, как я забочусь о себе...',
-    icon: '⚖️',
+    iconTool: 'dichotomy',
     hasInput: true,
   },
   {
@@ -49,7 +50,7 @@ const STEPS = [
     description: 'Выбери одно главное намерение на сегодня.',
     prompt: 'Моё намерение на сегодня:',
     placeholder: 'Например: Быть спокойным, несмотря на обстоятельства',
-    icon: '🎯',
+    iconTool: 'intention',
     hasInput: true,
     saveKey: 'daily-intention',
   },
@@ -57,7 +58,7 @@ const STEPS = [
     id: 'complete',
     title: 'Ты готов',
     description: 'Помни своё намерение в течение дня. Вечером мы вернёмся к нему.',
-    icon: '✨',
+    iconTool: 'sparkles',
   },
 ];
 
@@ -118,11 +119,11 @@ export default function MorningPractice() {
       {/* Header */}
       <div className="fixed top-0 left-0 right-0 z-40 px-4 pt-5 pb-4 safe-area-top flex items-center justify-between">
         <button
-          className="p-2 rounded-full"
+          className="w-10 h-10 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={handleBack}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} className="text-[var(--label)]" />
         </button>
         <span className="headline">Утренняя практика</span>
         <span className="footnote secondary-text">
@@ -137,7 +138,7 @@ export default function MorningPractice() {
           className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
           style={{ background: 'var(--card-secondary)' }}
         >
-          <span className="text-4xl">{step.icon}</span>
+          <ToolIcon tool={step.iconTool} size={40} className="text-[var(--apple-orange)]" />
         </div>
 
         {/* Title */}

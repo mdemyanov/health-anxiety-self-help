@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { Check, Play } from '../../icons';
 
 export default function ChatTimer({
   duration = 10,
@@ -49,9 +50,7 @@ export default function ChatTimer({
           className="w-8 h-8 rounded-full flex items-center justify-center"
           style={{ background: 'var(--apple-green)' }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
+          <Check size={16} color="white" strokeWidth={3} />
         </div>
         <span className="text-base" style={{ color: 'var(--apple-green)' }}>
           Готово!
@@ -72,9 +71,7 @@ export default function ChatTimer({
               className="w-10 h-10 rounded-full flex items-center justify-center"
               style={{ background: 'var(--apple-blue)' }}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-                <polygon points="5 3 19 12 5 21 5 3" />
-              </svg>
+              <Play size={16} fill="white" color="white" />
             </div>
             <span className="text-base font-medium">
               Начать ({duration} сек)

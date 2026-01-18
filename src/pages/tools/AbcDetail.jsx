@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Card } from '../../components/ui';
+import { ChevronLeft, Trash2 } from '../../components/icons';
 
 const SECTIONS = [
   { key: 'A', title: 'Событие', color: 'var(--apple-blue)' },
@@ -57,27 +58,27 @@ export default function AbcDetail() {
   return (
     <div className="min-h-screen pb-24">
       {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 flex items-center justify-between"
+      <div className="fixed top-0 left-0 right-0 z-40 px-4 py-4 safe-area-top flex items-center justify-between"
            style={{ background: 'var(--background)' }}>
         <button
-          className="p-2 rounded-full"
+          className="w-10 h-10 rounded-full flex items-center justify-center"
           style={{ background: 'var(--card-secondary)' }}
           onClick={() => navigate(-1)}
         >
-          <span className="text-lg">←</span>
+          <ChevronLeft size={20} className="text-[var(--label)]" />
         </button>
         <span className="headline">Запись</span>
         <button
-          className="p-2 rounded-full"
+          className="w-10 h-10 rounded-full flex items-center justify-center"
           style={{ background: 'rgba(255, 59, 48, 0.15)' }}
           onClick={() => setShowDeleteConfirm(true)}
         >
-          <span className="text-lg">🗑️</span>
+          <Trash2 size={20} className="text-[var(--apple-red)]" />
         </button>
       </div>
 
       {/* Content */}
-      <div className="px-4 pt-20">
+      <div className="px-4 pt-20 safe-area-top">
         {/* Date */}
         <p className="subhead secondary-text text-center mb-6">
           {formatDate(entry.date)}
