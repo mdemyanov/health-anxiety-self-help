@@ -61,13 +61,20 @@ export const eveningFlow = {
       id: 'what-went-well',
       messages: [
         {
-          type: 'therapist-question',
+          type: 'therapist-text',
           content: 'Что хорошего произошло сегодня? Назови 3 вещи — рабочие или личные.',
           delay: 500,
-          awaitInput: true,
-          inputPlaceholder: '1. ...\n2. ...\n3. ...',
+        },
+        {
+          type: 'repeated-input',
+          options: {
+            count: 3,
+            placeholder: 'Напиши одну хорошую вещь...',
+            statusHintTemplate: 'Напиши ещё {remaining}',
+          },
+          delay: 800,
+          awaitCompletion: true,
           saveAs: 'what_went_well',
-          multiline: true,
         },
       ],
     },

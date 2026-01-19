@@ -59,9 +59,14 @@ export default function ChatInput({
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      // Enter или Cmd/Ctrl+Enter отправляет сообщение
-      // Shift+Enter — новая строка (только в multiline)
-      if (e.metaKey || e.ctrlKey || !e.shiftKey) {
+      // Cmd/Ctrl+Enter — всегда отправка
+      if (e.metaKey || e.ctrlKey) {
+        e.preventDefault();
+        handleSubmit();
+      }
+      // Enter в single-line — отправка
+      // Enter в multiline — новая строка (браузер обрабатывает сам)
+      else if (!multiline) {
         e.preventDefault();
         handleSubmit();
       }

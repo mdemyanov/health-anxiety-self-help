@@ -17,13 +17,20 @@ export const eveningQuickFlow = {
       id: 'good-things',
       messages: [
         {
-          type: 'therapist-question',
+          type: 'therapist-text',
           content: 'Назови 3 хорошие вещи, которые произошли сегодня.',
           delay: 500,
-          awaitInput: true,
-          inputPlaceholder: '1. ...\n2. ...\n3. ...',
+        },
+        {
+          type: 'repeated-input',
+          options: {
+            count: 3,
+            placeholder: 'Напиши одну хорошую вещь...',
+            statusHintTemplate: 'Напиши ещё {remaining}',
+          },
+          delay: 800,
+          awaitCompletion: true,
           saveAs: 'good_things',
-          multiline: true,
         },
       ],
     },

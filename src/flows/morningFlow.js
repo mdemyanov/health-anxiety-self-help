@@ -96,13 +96,20 @@ export const morningFlow = {
       id: 'priorities',
       messages: [
         {
-          type: 'therapist-question',
+          type: 'therapist-text',
           content: 'Какие 3 главные задачи ты хочешь выполнить сегодня?',
           delay: 500,
-          awaitInput: true,
-          inputPlaceholder: '1. ...\n2. ...\n3. ...',
+        },
+        {
+          type: 'repeated-input',
+          options: {
+            count: 3,
+            placeholder: 'Напиши одну задачу...',
+            statusHintTemplate: 'Напиши ещё {remaining}',
+          },
+          delay: 800,
+          awaitCompletion: true,
           saveAs: 'priorities',
-          multiline: true,
         },
       ],
     },
